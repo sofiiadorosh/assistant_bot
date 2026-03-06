@@ -1,14 +1,50 @@
-from models import AddressBook, Record
-from decorators import input_error
-from exceptions import ArgumentInvalidError
+from src.models import AddressBook, Record
+from src.decorators import input_error
+from src.exceptions import ArgumentInvalidError
 
 
 def hello(args, contacts):
-    return "How can I help you?"
+    return "Welcome! Type 'help' to see available commands. How can I help you?"
 
 
 def exit_program(args, contacts):
     return "exit"
+
+
+def show_help(args, contacts):
+    return """
++--------------------------------------+--------------------------------------------+
+| Command                              | Description                                |
++--------------------------------------+--------------------------------------------+
+| GENERAL                                                                           |
++--------------------------------------+--------------------------------------------+
+| hello                                | Greet the assistant                        |
+| help                                 | Show this help message                     |
+| close / exit                         | Exit the assistant                         |
++--------------------------------------+--------------------------------------------+
+| CONTACTS                                                                          |
++--------------------------------------+--------------------------------------------+
+| add <name> <phone>                   | Add a new contact                          |
+| change <name> <old_phone> <new>      | Change phone number                        |
+| phone <name>                         | Show phone number(s)                       |
+| all                                  | Display all contacts                       |
+| add-birthday <name> <DD.MM.YYYY>     | Add birthday                               |
+| show-birthday <name>                 | Show birthday                              |
+| birthdays                            | Upcoming birthdays (7 days)                |
++--------------------------------------+--------------------------------------------+
+| NOTES                                                                             |
++--------------------------------------+--------------------------------------------+
+| add-note <text>                      | Add a new note                             |
+| all-notes                            | Display all notes                          |
+| find-note <keyword>                  | Search notes by keyword                    |
+| change-note <id> <new_text>          | Edit a note                                |
+| delete-note <id>                     | Delete a note                              |
+| add-tag <note_id> <tag>              | Add a tag to a note                        |
+| find-notes <tag>                     | Find notes by tag                          |
+| all-tags                             | Show all tags                              |
+| sort-notes                           | Sort notes by tags                         |
++--------------------------------------+--------------------------------------------+
+"""
 
 
 @input_error

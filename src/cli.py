@@ -1,7 +1,8 @@
-from store import save_data, load_data
-from commands import (
+from src.store import save_data, load_data
+from src.commands import (
     hello,
     exit_program,
+    show_help,
     add_contact,
     change_contact,
     show_phone,
@@ -21,9 +22,11 @@ def parse_input(user_input):
 def main():
     contacts = load_data()
     print("Welcome to the assistant bot!")
+    print(show_help([], contacts))
 
     commands = {
         "hello": hello,
+        "help": show_help,
         "add": add_contact,
         "change": change_contact,
         "phone": show_phone,

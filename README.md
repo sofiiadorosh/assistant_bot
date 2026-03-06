@@ -61,8 +61,8 @@ python main.py
 
 | Command | Description |
 |---------|-------------|
-| `hello` | Greet the assistant |
-| `help` | Show available commands |
+| `hello` | Greet the assistant and see available commands hint |
+| `help` | Display all available commands |
 | `close` / `exit` | Exit the assistant |
 
 #### Contact Commands

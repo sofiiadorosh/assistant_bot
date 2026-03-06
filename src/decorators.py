@@ -1,5 +1,5 @@
-from models import AddressBookError
-from exceptions import ArgumentInvalidError
+from src.models import AddressBookError
+from src.exceptions import ArgumentInvalidError
 
 
 def input_error(func):
