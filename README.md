@@ -28,6 +28,10 @@ A command-line interface (CLI) personal assistant application for managing conta
 - **Add tags** to notes - keywords that describe the topic and subject of the note
 - **Search and sort notes** by tags/keywords
 
+### Intelligent Analysis
+
+- **Command suggestions** - the assistant guesses what the user wants based on input text and suggests the closest matching command
+
 ### Data Persistence
 
 - All data (contacts, notes) is stored on the local disk in the user's home directory
