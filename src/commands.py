@@ -13,37 +13,41 @@ def exit_program(args, contacts):
 
 def show_help(args, contacts):
     return """
-+--------------------------------------+--------------------------------------------+
-| Command                              | Description                                |
-+--------------------------------------+--------------------------------------------+
-| GENERAL                                                                           |
-+--------------------------------------+--------------------------------------------+
-| hello                                | Greet the assistant                        |
-| help                                 | Show this help message                     |
-| close / exit                         | Exit the assistant                         |
-+--------------------------------------+--------------------------------------------+
-| CONTACTS                                                                          |
-+--------------------------------------+--------------------------------------------+
-| add <name> <phone>                   | Add a new contact                          |
-| change <name> <old_phone> <new>      | Change phone number                        |
-| phone <name>                         | Show phone number(s)                       |
-| all                                  | Display all contacts                       |
-| add-birthday <name> <DD.MM.YYYY>     | Add birthday                               |
-| show-birthday <name>                 | Show birthday                              |
-| birthdays                            | Upcoming birthdays (7 days)                |
-+--------------------------------------+--------------------------------------------+
-| NOTES                                                                             |
-+--------------------------------------+--------------------------------------------+
-| add-note <text>                      | Add a new note                             |
-| all-notes                            | Display all notes                          |
-| find-note <keyword>                  | Search notes by keyword                    |
-| change-note <id> <new_text>          | Edit a note                                |
-| delete-note <id>                     | Delete a note                              |
-| add-tag <note_id> <tag>              | Add a tag to a note                        |
-| find-notes <tag>                     | Find notes by tag                          |
-| all-tags                             | Show all tags                              |
-| sort-notes                           | Sort notes by tags                         |
-+--------------------------------------+--------------------------------------------+
++-----------------------------------------------+------------------------------------------------+
+| Command                                       | Description                                    |
++-----------------------------------------------+------------------------------------------------+
+| GENERAL                                                                                        |
++-----------------------------------------------+------------------------------------------------+
+| hello                                         | Greet the assistant                            |
+| help                                          | Show this help message                         |
+| close / exit                                  | Exit the assistant                             |
++-----------------------------------------------+------------------------------------------------+
+| CONTACTS                                                                                       |
++-----------------------------------------------+------------------------------------------------+
+| add-contact <name> <phone>                    | Add a new contact                              |
+| change-contact <name> <old_phone> <new_phone> | Change phone number                            |
+| show-phone <name>                             | Show phone number(s)                           |
+| all-contacts                                  | Display all contacts                           |
+| add-birthday <name> <DD.MM.YYYY>              | Add birthday                                   |
+| show-birthday <name>                          | Show birthday                                  |
+| birthdays <days>                              | Upcoming birthdays                             |
+| add-email <name> <email>                      | Add email to contact                           |
+| add-address <name> <address>                  | Add address to contact                         |
+| search-contacts <field> <query>               | Search by: name, phone, email, address, all    |
+| delete-contact <name>                         | Delete a contact                               |
++-----------------------------------------------+------------------------------------------------+
+| NOTES                                                                                          |
++-----------------------------------------------+------------------------------------------------+
+| add-note <text>                               | Add a new note                                 |
+| all-notes                                     | Display all notes                              |
+| find-note <keyword>                           | Search notes by keyword                        |
+| change-note <id> <new_text>                   | Edit a note                                    |
+| delete-note <id>                              | Delete a note                                  |
+| add-tag <note_id> <tag>                       | Add a tag to a note                            |
+| find-notes <tag>                              | Find notes by tag                              |
+| all-tags                                      | Show all tags                                  |
+| sort-notes                                    | Sort notes by tags                             |
++-----------------------------------------------+------------------------------------------------+
 """
 
 
