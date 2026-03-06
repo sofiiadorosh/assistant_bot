@@ -93,9 +93,9 @@ python main.py
 
 ## Data Storage
 
-All data is automatically saved to the user's home directory:
-- Contacts: `~/.assistant_bot/contacts.pkl`
-- Notes: `~/.assistant_bot/notes.pkl`
+All data (contacts, notes) is stored on the hard drive in the user's folder:
+- The assistant can be restarted without losing any data
+- Data is saved automatically after each operation
 
 ## Validation Rules
 
@@ -135,7 +135,7 @@ assistant_bot/
 
 ## Contributing
 
-1. Fork the repository
+1. Clone the repository (`git clone https://github.com/sofiiadorosh/assistant_bot.git`)
 2. Create a feature branch (`git checkout -b feature/tags`)
 3. Commit your changes (`git commit -m 'feat: add tags logic'`)
 4. Push to the branch (`git push origin feature/tags`)
