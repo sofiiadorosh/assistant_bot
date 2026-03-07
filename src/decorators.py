@@ -1,3 +1,4 @@
+from src.exceptions import ArgumentInvalidError, DaysInvalidError
 from src.models import (
     AddressBookError,
     InvalidPhoneError,
@@ -5,13 +6,14 @@ from src.models import (
     InvalidBirthdayError,
     RecordNotFoundError,
 )
-from src.exceptions import ArgumentInvalidError
 
 
 def input_error(func):
     def inner(*args, **kwargs):
         try:
             return func(*args, **kwargs)
+        except DaysInvalidError:
+            return "Days must be a non-negative integer."
         except (
             InvalidPhoneError,
             InvalidEmailError,

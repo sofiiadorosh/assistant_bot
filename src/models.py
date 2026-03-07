@@ -178,16 +178,14 @@ class AddressBook(UserDict):
             raise RecordNotFoundError(f"Contact '{name}' not found.")
         del self.data[name]
 
-    def get_upcoming_birthdays(self):
-        today = datetime.today()
-        today_date = today.date()
-        in_seven_days_date = (today + timedelta(days=WEEK_DAYS)).date()
+    def get_upcoming_birthdays(self, days):
+        today_date = datetime.today().date()
+
+        end_date = today_date + timedelta(days=days)
 
         upcoming_birthdays = []
 
         for contact in self.data.values():
-            name = contact.name.value
-
             if not contact.birthday:
                 continue
 
@@ -204,15 +202,27 @@ class AddressBook(UserDict):
                     f"Cannot find birthday this year for {name}: {birthday_datetime}."
                 )
                 continue
+            name = contact.name.value
+            birthday = contact.birthday.value
 
-            if birthday_date.date() < today_date:
-                birthday_date = birthday_date.replace(year=today_date.year + 1)
+            year = today_date.year
 
-            if today_date <= birthday_date.date() < in_seven_days_date:
-                weekday = birthday_date.weekday()
+            while True:
+                try:
+                    birthday_date = datetime(year, birthday.month, birthday.day).date()
+                except ValueError:
+                    year += 1
+                    continue
 
-                if weekday >= SATURDAY_WEEKDAY:
-                    birthday_date += timedelta(days=WEEK_DAYS - weekday)
+                if birthday_date > end_date:
+                    break
+
+                if birthday_date >= today_date:
+                    congratulation_date = birthday_date
+                    weekday = congratulation_date.weekday()
+
+                    if weekday >= SATURDAY_WEEKDAY:
+                        congratulation_date += timedelta(days=WEEK_DAYS - weekday)
 
                 upcoming_birthdays.append(
                     {
@@ -220,5 +230,16 @@ class AddressBook(UserDict):
                         "congratulation_date": birthday_date.strftime("%d.%m.%Y"),
                     }
                 )
+                    upcoming_birthdays.append({
+                        "name": name,
+                        "congratulation_date": congratulation_date
+                    })
+
+                year += 1
+
+        upcoming_birthdays.sort(key=lambda x: x["congratulation_date"])
+
+        for item in upcoming_birthdays:
+            item["congratulation_date"] = item["congratulation_date"].strftime("%d.%m.%Y")
 
         return upcoming_birthdays
