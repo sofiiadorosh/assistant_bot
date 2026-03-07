@@ -35,6 +35,10 @@ class InvalidEmailError(AddressBookError):
     pass
 
 
+class InvalidAddressError(AddressBookError):
+    pass
+
+
 class Field:
     def __init__(self, value):
         self.value = value
@@ -83,9 +87,9 @@ class Email(Field):
 
 class Address(Field):
     def __init__(self, value):
-        if len(value) < 3:
-            raise AddressBookError("Address should be at least 3 characters long.")
-        super().__init__(value)
+        if not value or len(value.strip()) < 3:
+            raise InvalidAddressError("Address should be at least 3 characters long.")
+        super().__init__(value.strip())
 
 
 class Birthday(Field):

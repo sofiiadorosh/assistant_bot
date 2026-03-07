@@ -188,11 +188,14 @@ def edit_email(args, contacts: AddressBook):
 
 @input_error
 def add_address(args, contacts: AddressBook):
-    if not args:
-        raise ArgumentInvalidError
+    try:
+        name, *address_parts = args
+        if not address_parts:
+            raise ValueError
 
-    name, *address_parts = args
-    address = " ".join(address_parts)
+        address = " ".join(address_parts)
+    except ValueError:
+        raise ArgumentInvalidError
 
     record = contacts.find_record(name)
 
@@ -213,11 +216,14 @@ def add_address(args, contacts: AddressBook):
 
 @input_error
 def edit_address(args, contacts: AddressBook):
-    if not args:
-        raise ArgumentInvalidError
+    try:
+        name, *address_parts = args
+        if not address_parts:
+            raise ValueError
 
-    name, *address_parts = args
-    address = " ".join(address_parts)
+        address = " ".join(address_parts)
+    except ValueError:
+        raise ArgumentInvalidError
 
     record = contacts.find_record(name)
 
