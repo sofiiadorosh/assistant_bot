@@ -32,7 +32,9 @@ def show_help(args, contacts):
 | show-birthday <name>                          | Show birthday                                  |
 | birthdays <days>                              | Upcoming birthdays                             |
 | add-email <name> <email>                      | Add email to contact                           |
+| edit-email <name> <new_email>                 | Update existing email                          |
 | add-address <name> <address>                  | Add address to contact                         |
+| edit-address <name> <new_address>              | Update existing address                       |
 | search-contacts <field> <query>               | Search by: name, phone, email, address, all    |
 | delete-contact <name>                         | Delete a contact                               |
 +-----------------------------------------------+------------------------------------------------+
@@ -90,7 +92,7 @@ def change_contact(args, contacts: AddressBook):
 @input_error
 def show_phone(args, contacts: AddressBook):
     try:
-        name, = args
+        (name,) = args
     except ValueError:
         raise ArgumentInvalidError
 
@@ -128,7 +130,7 @@ def add_birthday(args, contacts: AddressBook):
 @input_error
 def show_birthday(args, contacts: AddressBook):
     try:
-        name, = args
+        (name,) = args
     except ValueError:
         raise ArgumentInvalidError
 
@@ -144,11 +146,117 @@ def show_birthday(args, contacts: AddressBook):
 
 
 @input_error
+def add_email(args, contacts: AddressBook):
+    try:
+        name, email = args
+    except ValueError:
+        raise ArgumentInvalidError
+
+    record = contacts.find_record(name)
+
+    if record is None:
+        record = Record(name)
+        contacts.add_record(record)
+        record.add_email(email)
+        return f"Contact '{name}' added with email."
+
+    if record.email:
+        return f"Contact '{name}' already has an email. Use 'edit-email' to change it."
+
+    record.add_email(email)
+    return f"Email added for contact '{name}'."
+
+
+@input_error
+def edit_email(args, contacts: AddressBook):
+    try:
+        name, new_email = args
+    except ValueError:
+        raise ArgumentInvalidError
+
+    record = contacts.find_record(name)
+
+    if record is None:
+        return f"Contact '{name}' does not exist. Use 'add-contact' to create."
+
+    if not record.email:
+        return f"Contact '{name}' doesn't have an email yet. Use 'add-email' first."
+
+    record.update_email(new_email)
+    return f"Email updated for contact '{name}'."
+
+
+@input_error
+def add_address(args, contacts: AddressBook):
+    try:
+        name, *address_parts = args
+        if not address_parts:
+            raise ValueError
+
+        address = " ".join(address_parts)
+    except ValueError:
+        raise ArgumentInvalidError
+
+    record = contacts.find_record(name)
+
+    if record is None:
+        record = Record(name)
+        record.add_address(address)
+        contacts.add_record(record)
+        return f"Contact '{name}' added with address."
+
+    if record.address:
+        return (
+            f"Contact '{name}' already has an address. Use 'edit-address' to change it."
+        )
+
+    record.add_address(address)
+    return f"Address added for contact '{name}'."
+
+
+@input_error
+def edit_address(args, contacts: AddressBook):
+    try:
+        name, *address_parts = args
+        if not address_parts:
+            raise ValueError
+
+        address = " ".join(address_parts)
+    except ValueError:
+        raise ArgumentInvalidError
+
+    record = contacts.find_record(name)
+
+    if record is None:
+        return f"Contact '{name}' does not exist. Use 'add-contact' to create."
+
+    if not record.address:
+        return f"Contact '{name}' doesn't have an address yet. Use 'add-address' first."
+
+    record.update_address(address)
+    return f"Address updated for contact '{name}'."
+
+
+@input_error
+def delete_contact(args, contacts: AddressBook):
+    try:
+        (name,) = args
+    except ValueError:
+        raise ArgumentInvalidError
+
+    if name not in contacts:
+        return f"Contact '{name}' not found."
+
+    contacts.delete_record(name)
+    return f"Contact '{name}' deleted successfully."
+
+
+@input_error
 def get_upcoming_birthdays(args, contacts: AddressBook):
     if not args:
         raise ArgumentInvalidError
 
-    days, = args
+    (days,) = args
 
     try:
         days = int(days)
@@ -163,5 +271,9 @@ def get_upcoming_birthdays(args, contacts: AddressBook):
     upcoming_birthdays = contacts.get_upcoming_birthdays(days)
 
     if not upcoming_birthdays:
+
         return f"No birthdays in the next {days} day(s). Use 'add-birthday' to set."
-    return "\n".join(f"{entry['name']}: {entry['congratulation_date']}" for entry in upcoming_birthdays)
+    return "\n".join(
+        f"{entry['name']}: {entry['congratulation_date']}"
+        for entry in upcoming_birthdays
+    )

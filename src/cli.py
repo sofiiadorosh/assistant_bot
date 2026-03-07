@@ -10,6 +10,11 @@ from src.commands import (
     add_birthday,
     show_birthday,
     get_upcoming_birthdays,
+    add_email,
+    edit_email,
+    add_address,
+    edit_address,
+    delete_contact,
 )
 
 
@@ -34,6 +39,11 @@ def main():
         "add-birthday": add_birthday,
         "show-birthday": show_birthday,
         "birthdays": get_upcoming_birthdays,
+        "add-email": add_email,
+        "edit-email": edit_email,
+        "add-address": add_address,
+        "edit-address": edit_address,
+        "delete-contact": delete_contact,
         "close": exit_program,
         "exit": exit_program,
     }
