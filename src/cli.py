@@ -19,12 +19,9 @@ from src.commands import (
 
 
 def parse_input(user_input):
-    parts = user_input.split()
-    if not parts:
-        return "", []
-    cmd = parts[0].strip().lower()
-    args = parts[1:]
-    return cmd, args
+    cmd, *args = user_input.split()
+    cmd = cmd.strip().lower()
+    return cmd, *args
 
 
 def main():
@@ -52,28 +49,23 @@ def main():
     }
 
     while True:
-        try:
-            user_input = input("Enter a command: ").strip()
-            if not user_input:
-                continue
+        user_input = input("Enter a command: ").strip()
+        if not user_input:
+            continue
 
-            command, args = parse_input(user_input)
-            action = commands.get(command)
+        command, *args = parse_input(user_input)
+        action = commands.get(command.lower())
 
-            if action:
-                result = action(args, contacts)
-                if result == "exit":
-                    save_data(contacts)
-                    print("Goodbye!")
-                    break
-                if result:
-                    print(result)
-            else:
-                print("Invalid command. Type 'help' to see available commands.")
-        except KeyboardInterrupt:
-            save_data(contacts)
-            print("\nGoodbye!")
-            break
+        if action:
+            result = action(args, contacts)
+            if result == "exit":
+                save_data(contacts)
+                print("Goodbye!")
+                break
+            if result:
+                print(result)
+        else:
+            print("Invalid command.")
 
 
 if __name__ == "__main__":

@@ -206,7 +206,7 @@ def edit_address(args, contacts: AddressBook):
 
     record = contacts.find_record(name)
     if record:
-        if not record.address:  # Додано перевірку на наявність
+        if not record.address:
             return (
                 f"Contact {name} doesn't have an address yet. Use 'add-address' first."
             )
