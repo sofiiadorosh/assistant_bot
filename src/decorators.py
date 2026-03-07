@@ -24,8 +24,8 @@ def input_error(func):
         except ArgumentInvalidError:
             return "Provide all needed arguments to run a command."
         except AddressBookError as e:
-            return str(e)
+            return e
         except Exception as e:
-            return f"An unexpected error occurred: {e}"
+            return f"Error: {e}"
 
     return inner

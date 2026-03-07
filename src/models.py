@@ -157,7 +157,7 @@ class Record:
         self.address = Address(new_address)
 
     def __str__(self):
-        phones = "; ".join(p.value for p in self.phones)
+        phones = "; ".join(phone.value for phone in self.phones)
         birthday = str(self.birthday) if self.birthday else "Not set"
         email = str(self.email) if self.email else "Not set"
         address = str(self.address) if self.address else "Not set"
@@ -189,19 +189,6 @@ class AddressBook(UserDict):
             if not contact.birthday:
                 continue
 
-            birthday_datetime = contact.birthday.value
-
-            try:
-                birthday_date = datetime(
-                    year=today_date.year,
-                    month=birthday_datetime.month,
-                    day=birthday_datetime.day,
-                )
-            except ValueError:
-                print(
-                    f"Cannot find birthday this year for {name}: {birthday_datetime}."
-                )
-                continue
             name = contact.name.value
             birthday = contact.birthday.value
 
@@ -224,22 +211,17 @@ class AddressBook(UserDict):
                     if weekday >= SATURDAY_WEEKDAY:
                         congratulation_date += timedelta(days=WEEK_DAYS - weekday)
 
-                upcoming_birthdays.append(
-                    {
-                        "name": name,
-                        "congratulation_date": birthday_date.strftime("%d.%m.%Y"),
-                    }
-                )
-                    upcoming_birthdays.append({
-                        "name": name,
-                        "congratulation_date": congratulation_date
-                    })
+                    upcoming_birthdays.append(
+                        {"name": name, "congratulation_date": congratulation_date}
+                    )
 
                 year += 1
 
         upcoming_birthdays.sort(key=lambda x: x["congratulation_date"])
 
         for item in upcoming_birthdays:
-            item["congratulation_date"] = item["congratulation_date"].strftime("%d.%m.%Y")
+            item["congratulation_date"] = item["congratulation_date"].strftime(
+                "%d.%m.%Y"
+            )
 
         return upcoming_birthdays
