@@ -239,10 +239,11 @@ def edit_address(args, contacts: AddressBook):
 
 @input_error
 def delete_contact(args, contacts: AddressBook):
-    if not args:
+    try:
+        (name,) = args
+    except ValueError:
         raise ArgumentInvalidError
 
-    name = args[0]
     if name not in contacts:
         return f"Contact '{name}' not found."
 

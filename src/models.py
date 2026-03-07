@@ -93,21 +93,20 @@ class Address(Field):
 
 
 class Birthday(Field):
-    def __init__(self, birthday):
-        self.birthday = birthday
-        super().__init__(self.value)
+    def __init__(self, value):
+        self.value = value
 
     @property
-    def birthday(self):
-        return self.value
+    def value(self):
+        return self._value
 
-    @birthday.setter
-    def birthday(self, birthday):
+    @value.setter
+    def value(self, new_value):
         try:
-            birthday_date = datetime.strptime(birthday, "%d.%m.%Y").date()
+            birthday_date = datetime.strptime(new_value, "%d.%m.%Y").date()
+            self._value = birthday_date
         except ValueError:
             raise InvalidBirthdayError("Invalid date format. Use DD.MM.YYYY.")
-        self.value = birthday_date
 
     def __str__(self):
         return self.value.strftime("%d.%m.%Y")
