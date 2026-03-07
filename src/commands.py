@@ -32,7 +32,9 @@ def show_help(args, contacts):
 | show-birthday <name>                          | Show birthday                                  |
 | birthdays <days>                              | Upcoming birthdays                             |
 | add-email <name> <email>                      | Add email to contact                           |
+| edit-email <name> <new_email>                 | Update existing email                          |
 | add-address <name> <address>                  | Add address to contact                         |
+| edit-address <name> <new_address>              | Update existing address                       |
 | search-contacts <field> <query>               | Search by: name, phone, email, address, all    |
 | delete-contact <name>                         | Delete a contact                               |
 +-----------------------------------------------+------------------------------------------------+
@@ -90,7 +92,7 @@ def change_contact(args, contacts: AddressBook):
 @input_error
 def show_phone(args, contacts: AddressBook):
     try:
-        name, = args
+        (name,) = args
     except ValueError:
         raise ArgumentInvalidError
 
@@ -128,7 +130,7 @@ def add_birthday(args, contacts: AddressBook):
 @input_error
 def show_birthday(args, contacts: AddressBook):
     try:
-        name, = args
+        (name,) = args
     except ValueError:
         raise ArgumentInvalidError
 
@@ -144,6 +146,89 @@ def show_birthday(args, contacts: AddressBook):
 
 
 @input_error
+def add_email(args, contacts: AddressBook):
+    try:
+        name, email = args
+    except ValueError:
+        raise ArgumentInvalidError
+
+    record = contacts.find_record(name)
+    if record:
+        if record.email:
+            return (
+                f"Contact {name} already has an email. Use 'edit-email' to change it."
+            )
+        record.add_email(email)
+        return f"Email added for {name}."
+    return f"Contact {name} not found."
+
+
+@input_error
+def edit_email(args, contacts: AddressBook):
+    try:
+        name, new_email = args
+    except ValueError:
+        raise ArgumentInvalidError
+
+    record = contacts.find_record(name)
+    if record:
+        if not record.email:
+            return f"Contact {name} doesn't have an email yet. Use 'add-email' first."
+        record.update_email(new_email)
+        return f"Email updated for {name}."
+    return f"Contact {name} not found."
+
+
+@input_error
+def add_address(args, contacts: AddressBook):
+    if len(args) < 2:
+        raise ArgumentInvalidError
+
+    name = args[0]
+    address = " ".join(args[1:])
+
+    record = contacts.find_record(name)
+    if record:
+        if record.address:
+            return f"Contact {name} already has an address. Use 'edit-address' to change it."
+        record.add_address(address)
+        return f"Address added for {name}."
+    return f"Contact '{name}' not found."
+
+
+@input_error
+def edit_address(args, contacts: AddressBook):
+    if len(args) < 2:
+        raise ArgumentInvalidError
+
+    name = args[0]
+    new_address = " ".join(args[1:])
+
+    record = contacts.find_record(name)
+    if record:
+        if not record.address:  # Додано перевірку на наявність
+            return (
+                f"Contact {name} doesn't have an address yet. Use 'add-address' first."
+            )
+        record.update_address(new_address)
+        return f"Address updated for {name}."
+    return f"Contact {name} not found."
+
+
+@input_error
+def delete_contact(args, contacts: AddressBook):
+    if not args:
+        raise ArgumentInvalidError
+
+    name = args[0]
+    if name not in contacts:
+        return f"Contact '{name}' not found."
+
+    contacts.delete_record(name)
+    return f"Contact '{name}' deleted successfully."
+
+
+@input_error
 def get_upcoming_birthdays(args, contacts: AddressBook):
     if not contacts:
         return "No contacts yet. Use 'add' to create."
@@ -152,4 +237,7 @@ def get_upcoming_birthdays(args, contacts: AddressBook):
 
     if not upcoming_birthdays:
         return "No upcoming birthdays yet. Use 'add-birthday' to set."
-    return "\n".join(f"{entry['name']}: {entry['congratulation_date']}" for entry in upcoming_birthdays)
+    return "\n".join(
+        f"{entry['name']}: {entry['congratulation_date']}"
+        for entry in upcoming_birthdays
+    )

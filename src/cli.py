@@ -10,13 +10,21 @@ from src.commands import (
     add_birthday,
     show_birthday,
     get_upcoming_birthdays,
+    add_email,
+    edit_email,
+    add_address,
+    edit_address,
+    delete_contact,
 )
 
 
 def parse_input(user_input):
-    cmd, *args = user_input.split()
-    cmd = cmd.strip().lower()
-    return cmd, *args
+    parts = user_input.split()
+    if not parts:
+        return "", []
+    cmd = parts[0].strip().lower()
+    args = parts[1:]
+    return cmd, args
 
 
 def main():
@@ -34,25 +42,39 @@ def main():
         "add-birthday": add_birthday,
         "show-birthday": show_birthday,
         "birthdays": get_upcoming_birthdays,
+        "add-email": add_email,
+        "edit-email": edit_email,
+        "add-address": add_address,
+        "edit-address": edit_address,
+        "delete-contact": delete_contact,
         "close": exit_program,
         "exit": exit_program,
     }
 
     while True:
-        user_input = input("Enter a command: ").strip()
-        if not user_input:
-            continue
+        try:
+            user_input = input("Enter a command: ").strip()
+            if not user_input:
+                continue
 
-        command, *args = parse_input(user_input)
-        action = commands.get(command.lower())
+            command, args = parse_input(user_input)
+            action = commands.get(command)
 
-        if action:
-            result = action(args, contacts)
-            if result == "exit":
-                save_data(contacts)
-                print("Goodbye!")
-                break
-            if result:
-                print(result)
-        else:
-            print("Invalid command.")
+            if action:
+                result = action(args, contacts)
+                if result == "exit":
+                    save_data(contacts)
+                    print("Goodbye!")
+                    break
+                if result:
+                    print(result)
+            else:
+                print("Invalid command. Type 'help' to see available commands.")
+        except KeyboardInterrupt:
+            save_data(contacts)
+            print("\nGoodbye!")
+            break
+
+
+if __name__ == "__main__":
+    main()

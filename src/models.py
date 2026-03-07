@@ -31,6 +31,10 @@ class InvalidNameError(AddressBookError):
     pass
 
 
+class InvalidEmailError(AddressBookError):
+    pass
+
+
 class Field:
     def __init__(self, value):
         self.value = value
@@ -47,19 +51,41 @@ class Name(Field):
 
 
 class Phone(Field):
-    def __init__(self, phone):
-        self.phone = phone
-        super().__init__(self.value)
+    def __init__(self, value):
+        self.value = value
 
     @property
-    def phone(self):
-        return self.value
+    def value(self):
+        return self._value
 
-    @phone.setter
-    def phone(self, phone):
-        if not re.fullmatch(r'\d{10}', phone):
-            raise InvalidPhoneError("Phone number must contain exactly 10 digits.")
-        self.value = phone
+    @value.setter
+    def value(self, new_value):
+        if not re.fullmatch(r"\d{10,}", new_value):
+            raise InvalidPhoneError("Phone number must contain at least 10 digits.")
+        self._value = new_value
+
+
+class Email(Field):
+    def __init__(self, value):
+        self.value = value
+
+    @property
+    def value(self):
+        return self._value
+
+    @value.setter
+    def value(self, new_value):
+        email_regex = r"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
+        if not re.fullmatch(email_regex, new_value):
+            raise InvalidEmailError("Invalid email format (e.g., user@example.com).")
+        self._value = new_value
+
+
+class Address(Field):
+    def __init__(self, value):
+        if len(value) < 3:
+            raise AddressBookError("Address should be at least 3 characters long.")
+        super().__init__(value)
 
 
 class Birthday(Field):
@@ -88,20 +114,23 @@ class Record:
         self.name = Name(name)
         self.phones = []
         self.birthday = None
+        self.email = None
+        self.address = None
 
     def add_phone(self, phone):
         self.phones.append(Phone(phone))
 
     def remove_phone(self, phone):
         self.phones = [
-            existing_phone for existing_phone in self.phones
+            existing_phone
+            for existing_phone in self.phones
             if existing_phone.value != phone
         ]
 
     def edit_phone(self, old_phone, new_phone):
         for existing_phone in self.phones:
             if existing_phone.value == old_phone:
-                existing_phone.phone = new_phone
+                existing_phone.value = new_phone
                 return
         raise PhoneNotFoundError("Phone number not found.")
 
@@ -115,10 +144,24 @@ class Record:
     def add_birthday(self, birthday):
         self.birthday = Birthday(birthday)
 
+    def add_email(self, email):
+        self.email = Email(email)
+
+    def add_address(self, address):
+        self.address = Address(address)
+
+    def update_email(self, new_email):
+        self.email = Email(new_email)
+
+    def update_address(self, new_address):
+        self.address = Address(new_address)
+
     def __str__(self):
-        phones = "; ".join(phone.value for phone in self.phones)
+        phones = "; ".join(p.value for p in self.phones)
         birthday = str(self.birthday) if self.birthday else "Not set"
-        return f"Contact name: {self.name.value}, phones: {phones}, birthday: {birthday}"
+        email = str(self.email) if self.email else "Not set"
+        address = str(self.address) if self.address else "Not set"
+        return f"Contact name: {self.name.value}, phones: {phones}, birthday: {birthday}, email: {email}, address: {address}"
 
 
 class AddressBook(UserDict):
@@ -154,10 +197,12 @@ class AddressBook(UserDict):
                 birthday_date = datetime(
                     year=today_date.year,
                     month=birthday_datetime.month,
-                    day=birthday_datetime.day
+                    day=birthday_datetime.day,
                 )
             except ValueError:
-                print(f"Cannot find birthday this year for {name}: {birthday_datetime}.")
+                print(
+                    f"Cannot find birthday this year for {name}: {birthday_datetime}."
+                )
                 continue
 
             if birthday_date.date() < today_date:
@@ -169,9 +214,11 @@ class AddressBook(UserDict):
                 if weekday >= SATURDAY_WEEKDAY:
                     birthday_date += timedelta(days=WEEK_DAYS - weekday)
 
-                upcoming_birthdays.append({
-                    "name": name,
-                    "congratulation_date": birthday_date.strftime("%d.%m.%Y")
-                })
+                upcoming_birthdays.append(
+                    {
+                        "name": name,
+                        "congratulation_date": birthday_date.strftime("%d.%m.%Y"),
+                    }
+                )
 
         return upcoming_birthdays

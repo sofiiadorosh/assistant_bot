@@ -76,8 +76,10 @@ python main.py
 | `add-birthday <name> <date>` | Add a birthday to a contact (DD.MM.YYYY) |
 | `show-birthday <name>` | Show birthday for a contact |
 | `birthdays <days>` | Show contacts with birthdays in the next N days |
-| `add-email <name> <email>` | Add an email to a contact |
-| `add-address <name> <address>` | Add an address to a contact |
+| `add-email <name> <email>` | Add an email address to a contact |
+| `edit-email <name> <new_email>` | Update an existing email address |
+| `add-address <name> <address>` | Add a physical address to a contact |
+| `edit-address <name> <new_address>` | Update an existing physical address |
 | `search-contacts <field> <query>` | Search contacts by field: `name`, `phone`, `email`, `address`, or `all` |
 | `delete-contact <name>` | Delete a contact |
 
@@ -114,6 +116,9 @@ All data (contacts, notes) is stored on the hard drive in the user's folder:
 ### Birthday
 - Must be in a valid date format (DD.MM.YYYY)
 - Cannot be a future date
+
+### Address
+- Must be at least 3 characters long.
 
 ## Project Structure
 
