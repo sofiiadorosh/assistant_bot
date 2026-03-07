@@ -1,6 +1,6 @@
 from src.models import AddressBook, Record
 from src.decorators import input_error
-from src.exceptions import ArgumentInvalidError
+from src.exceptions import ArgumentInvalidError, DaysInvalidError
 
 
 def hello(args, contacts):
@@ -145,11 +145,23 @@ def show_birthday(args, contacts: AddressBook):
 
 @input_error
 def get_upcoming_birthdays(args, contacts: AddressBook):
+    if not args:
+        raise ArgumentInvalidError
+
+    days, = args
+
+    try:
+        days = int(days)
+        if days < 0:
+            raise ValueError
+    except ValueError:
+        raise DaysInvalidError()
+
     if not contacts:
         return "No contacts yet. Use 'add' to create."
 
-    upcoming_birthdays = contacts.get_upcoming_birthdays()
+    upcoming_birthdays = contacts.get_upcoming_birthdays(days)
 
     if not upcoming_birthdays:
-        return "No upcoming birthdays yet. Use 'add-birthday' to set."
+        return f"No birthdays in the next {days} day(s). Use 'add-birthday' to set."
     return "\n".join(f"{entry['name']}: {entry['congratulation_date']}" for entry in upcoming_birthdays)

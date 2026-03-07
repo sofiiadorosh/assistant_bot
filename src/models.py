@@ -135,43 +135,49 @@ class AddressBook(UserDict):
             raise RecordNotFoundError(f"Contact '{name}' not found.")
         del self.data[name]
 
-    def get_upcoming_birthdays(self):
-        today = datetime.today()
-        today_date = today.date()
-        in_seven_days_date = (today + timedelta(days=WEEK_DAYS)).date()
+    def get_upcoming_birthdays(self, days):
+        today_date = datetime.today().date()
+
+        end_date = today_date + timedelta(days=days)
 
         upcoming_birthdays = []
 
         for contact in self.data.values():
-            name = contact.name.value
-
             if not contact.birthday:
                 continue
 
-            birthday_datetime = contact.birthday.value
+            name = contact.name.value
+            birthday = contact.birthday.value
 
-            try:
-                birthday_date = datetime(
-                    year=today_date.year,
-                    month=birthday_datetime.month,
-                    day=birthday_datetime.day
-                )
-            except ValueError:
-                print(f"Cannot find birthday this year for {name}: {birthday_datetime}.")
-                continue
+            year = today_date.year
 
-            if birthday_date.date() < today_date:
-                birthday_date = birthday_date.replace(year=today_date.year + 1)
+            while True:
+                try:
+                    birthday_date = datetime(year, birthday.month, birthday.day).date()
+                except ValueError:
+                    year += 1
+                    continue
 
-            if today_date <= birthday_date.date() < in_seven_days_date:
-                weekday = birthday_date.weekday()
+                if birthday_date > end_date:
+                    break
 
-                if weekday >= SATURDAY_WEEKDAY:
-                    birthday_date += timedelta(days=WEEK_DAYS - weekday)
+                if birthday_date >= today_date:
+                    congratulation_date = birthday_date
+                    weekday = congratulation_date.weekday()
 
-                upcoming_birthdays.append({
-                    "name": name,
-                    "congratulation_date": birthday_date.strftime("%d.%m.%Y")
-                })
+                    if weekday >= SATURDAY_WEEKDAY:
+                        congratulation_date += timedelta(days=WEEK_DAYS - weekday)
+
+                    upcoming_birthdays.append({
+                        "name": name,
+                        "congratulation_date": congratulation_date
+                    })
+
+                year += 1
+
+        upcoming_birthdays.sort(key=lambda x: x["congratulation_date"])
+
+        for item in upcoming_birthdays:
+            item["congratulation_date"] = item["congratulation_date"].strftime("%d.%m.%Y")
 
         return upcoming_birthdays
