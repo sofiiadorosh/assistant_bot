@@ -12,7 +12,7 @@ A command-line interface (CLI) personal assistant application for managing conta
   - Phone number(s)
   - Email address
   - Birthday
-- **Search contacts** by various criteria (e.g., by name)
+- **Find contacts** by field and query (e.g., name, phone, email, address, or all)
 - **Edit and delete** contact records
 - **Birthday reminders** - display contacts with upcoming birthdays within a specified number of days
 - **Input validation** - automatic validation of phone numbers and email addresses during creation or editing, with user notifications for invalid input
@@ -80,7 +80,7 @@ python main.py
 | `edit-email <name> <new_email>` | Update an existing email address |
 | `add-address <name> <address>` | Add a physical address to a contact |
 | `edit-address <name> <new_address>` | Update an existing physical address |
-| `search-contacts <field> <query>` | Search contacts by field: `name`, `phone`, `email`, `address`, or `all` |
+| `find-contact <field> <query>` | Find contacts by field: `name`, `phone`, `email`, `address`, or `all` |
 | `delete-contact <name>` | Delete a contact |
 
 #### Notes Commands

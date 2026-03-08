@@ -15,6 +15,7 @@ from src.commands import (
     add_address,
     edit_address,
     delete_contact,
+    find_contact,
 )
 
 
@@ -43,6 +44,7 @@ def main():
         "edit-email": edit_email,
         "add-address": add_address,
         "edit-address": edit_address,
+        "find-contact": find_contact,
         "delete-contact": delete_contact,
         "close": exit_program,
         "exit": exit_program,

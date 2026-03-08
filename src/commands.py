@@ -35,7 +35,7 @@ def show_help(args, contacts):
 | edit-email <name> <new_email>                 | Update existing email                          |
 | add-address <name> <address>                  | Add address to contact                         |
 | edit-address <name> <new_address>              | Update existing address                       |
-| search-contacts <field> <query>               | Search by: name, phone, email, address, all    |
+| find-contact <field> <query>                  | Find by: name, phone, email, address, all      |
 | delete-contact <name>                         | Delete a contact                               |
 +-----------------------------------------------+------------------------------------------------+
 | NOTES                                                                                          |
@@ -60,7 +60,7 @@ def add_contact(args, contacts: AddressBook):
     except ValueError:
         raise ArgumentInvalidError
 
-    record = contacts.find_record(name)
+    record = contacts.find_record_by_name(name)
 
     if record is None:
         record = Record(name)
@@ -79,7 +79,7 @@ def change_contact(args, contacts: AddressBook):
     except ValueError:
         raise ArgumentInvalidError
 
-    record = contacts.find_record(name)
+    record = contacts.find_record_by_name(name)
 
     if record is None:
         return f"Contact '{name}' does not exist. Use 'add' to create."
@@ -96,7 +96,7 @@ def show_phone(args, contacts: AddressBook):
     except ValueError:
         raise ArgumentInvalidError
 
-    record = contacts.find_record(name)
+    record = contacts.find_record_by_name(name)
 
     if record is None:
         return f"Contact '{name}' does not exist. Use 'add' to create."
@@ -118,7 +118,7 @@ def add_birthday(args, contacts: AddressBook):
     except ValueError:
         raise ArgumentInvalidError
 
-    record = contacts.find_record(name)
+    record = contacts.find_record_by_name(name)
 
     if record is None:
         return f"Contact '{name}' does not exist. Use 'add' to create."
@@ -134,7 +134,7 @@ def show_birthday(args, contacts: AddressBook):
     except ValueError:
         raise ArgumentInvalidError
 
-    record = contacts.find_record(name)
+    record = contacts.find_record_by_name(name)
 
     if record is None:
         return f"Contact '{name}' does not exist. Use 'add' to create."
@@ -152,7 +152,7 @@ def add_email(args, contacts: AddressBook):
     except ValueError:
         raise ArgumentInvalidError
 
-    record = contacts.find_record(name)
+    record = contacts.find_record_by_name(name)
 
     if record is None:
         record = Record(name)
@@ -174,7 +174,7 @@ def edit_email(args, contacts: AddressBook):
     except ValueError:
         raise ArgumentInvalidError
 
-    record = contacts.find_record(name)
+    record = contacts.find_record_by_name(name)
 
     if record is None:
         return f"Contact '{name}' does not exist. Use 'add-contact' to create."
@@ -197,7 +197,7 @@ def add_address(args, contacts: AddressBook):
     except ValueError:
         raise ArgumentInvalidError
 
-    record = contacts.find_record(name)
+    record = contacts.find_record_by_name(name)
 
     if record is None:
         record = Record(name)
@@ -225,7 +225,7 @@ def edit_address(args, contacts: AddressBook):
     except ValueError:
         raise ArgumentInvalidError
 
-    record = contacts.find_record(name)
+    record = contacts.find_record_by_name(name)
 
     if record is None:
         return f"Contact '{name}' does not exist. Use 'add-contact' to create."
@@ -249,6 +249,36 @@ def delete_contact(args, contacts: AddressBook):
 
     contacts.delete_record(name)
     return f"Contact '{name}' deleted successfully."
+
+
+@input_error
+def find_contact(args, contacts: AddressBook):
+    try:
+        field, *rest = args
+        if not rest:
+            raise ValueError
+        field = field.lower()
+        if field == "address":
+            query = " ".join(rest)
+        else:
+            (query,) = rest
+    except ValueError:
+        raise ArgumentInvalidError
+
+    valid_fields = ("name", "phone", "email", "address", "all")
+    if field not in valid_fields:
+        return f"Invalid field. Use: {', '.join(valid_fields)}"
+
+    query = str(query).strip().lower()
+    records = contacts.find_record(field, query)
+
+    if not records:
+        return "No contacts found."
+
+    if not isinstance(records, list):
+        records = [records]
+
+    return "\n".join(map(str, records))
 
 
 @input_error
