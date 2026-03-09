@@ -1,4 +1,4 @@
-from src.store import save_data, load_data
+from src.store import load_data
 from src.commands import (
     hello,
     exit_program,
@@ -59,7 +59,6 @@ def main():
         if action:
             result = action(args, contacts)
             if result == "exit":
-                save_data(contacts)
                 print("Goodbye!")
                 break
             if result:

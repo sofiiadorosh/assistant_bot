@@ -1,5 +1,5 @@
 from src.models import AddressBook, Record
-from src.decorators import input_error
+from src.decorators import input_error, persist_data
 from src.exceptions import ArgumentInvalidError, DaysInvalidError
 
 
@@ -7,6 +7,7 @@ def hello(args, contacts):
     return "Welcome! Type 'help' to see available commands. How can I help you?"
 
 
+@persist_data
 def exit_program(args, contacts):
     return "exit"
 
@@ -54,6 +55,7 @@ def show_help(args, contacts):
 
 
 @input_error
+@persist_data
 def add_contact(args, contacts: AddressBook):
     try:
         name, phone = args
@@ -73,6 +75,7 @@ def add_contact(args, contacts: AddressBook):
 
 
 @input_error
+@persist_data
 def change_contact(args, contacts: AddressBook):
     try:
         name, old_phone, new_phone = args
@@ -112,6 +115,7 @@ def show_all(args, contacts: AddressBook):
 
 
 @input_error
+@persist_data
 def add_birthday(args, contacts: AddressBook):
     try:
         name, birthday = args
@@ -146,6 +150,7 @@ def show_birthday(args, contacts: AddressBook):
 
 
 @input_error
+@persist_data
 def add_email(args, contacts: AddressBook):
     try:
         name, email = args
@@ -168,6 +173,7 @@ def add_email(args, contacts: AddressBook):
 
 
 @input_error
+@persist_data
 def edit_email(args, contacts: AddressBook):
     try:
         name, new_email = args
@@ -187,6 +193,7 @@ def edit_email(args, contacts: AddressBook):
 
 
 @input_error
+@persist_data
 def add_address(args, contacts: AddressBook):
     try:
         name, *address_parts = args
@@ -215,6 +222,7 @@ def add_address(args, contacts: AddressBook):
 
 
 @input_error
+@persist_data
 def edit_address(args, contacts: AddressBook):
     try:
         name, *address_parts = args
@@ -238,6 +246,7 @@ def edit_address(args, contacts: AddressBook):
 
 
 @input_error
+@persist_data
 def delete_contact(args, contacts: AddressBook):
     try:
         (name,) = args
