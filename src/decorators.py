@@ -6,6 +6,7 @@ from src.models import (
     InvalidBirthdayError,
     RecordNotFoundError,
 )
+from src.store import save_data
 
 
 def input_error(func):
@@ -28,4 +29,11 @@ def input_error(func):
         except Exception as e:
             return f"Error: {e}"
 
+    return inner
+
+def persist_data(func):
+    def inner(*args, **kwargs):
+        result = func(*args, **kwargs)
+        save_data(args[1])
+        return result
     return inner
