@@ -30,15 +30,26 @@ def all_notes(args, notes):
 
 
 @input_error
-def find_note_by_keyword(args, notes):
+def find_notes(args, notes):
     try:
-        (keyword,) = args
+        field, *rest = args
+        if not rest:
+            raise ValueError
+        value = " ".join(rest).strip()
+        if not value:
+            raise ValueError
     except ValueError:
         raise ArgumentInvalidError
 
-    found_notes = notes.find_note_by_keyword(keyword)
+    field = field.lower()
+    methods = {"keyword": notes.find_note_by_keyword, "tag": notes.find_note_by_tag}
+
+    if field not in methods:
+        return "Invalid field. Use 'keyword' or 'tag'."
+
+    found_notes = methods[field](value)
     if not found_notes:
-        return f"No notes found with keyword '{keyword}'."
+        return f"No notes found with {field} '{value}'."
     return "\n".join(str(note) for note in found_notes)
 
 
@@ -85,19 +96,6 @@ def add_tag(args, notes):
 
     note.add_tag(tag)
     return f"Note '{title}' updated."
-
-
-@input_error
-def find_notes_by_tag(args, notes):
-    try:
-        (tag,) = args
-    except ValueError:
-        raise ArgumentInvalidError
-
-    found_notes = notes.find_note_by_tag(tag)
-    if not found_notes:
-        return f"No notes found with tag '{tag}'."
-    return "\n".join(str(note) for note in found_notes)
 
 
 @input_error

@@ -22,11 +22,10 @@ from src.address_book.commands import (
 from src.note_book.commands import (
     add_note,
     all_notes,
-    find_note_by_keyword,
+    find_notes,
     edit_note,
     delete_note,
     add_tag,
-    find_notes_by_tag,
     all_tags,
 )
 
@@ -68,11 +67,10 @@ def main():
     notes_commands = {
         "add-note": add_note,
         "all-notes": all_notes,
-        "find-note": find_note_by_keyword,
+        "find-note": find_notes,
         "edit-note": edit_note,
         "delete-note": delete_note,
         "add-tag": add_tag,
-        "find-notes": find_notes_by_tag,
         "all-tags": all_tags,
     }
 

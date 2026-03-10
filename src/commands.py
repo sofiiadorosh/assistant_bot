@@ -41,11 +41,10 @@ def show_help(args, contacts, notes):
 +-----------------------------------------------+------------------------------------------------+
 | add-note <title> <text>                       | Add a new note                                 |
 | all-notes                                     | Display all notes                              |
-| find-note <keyword>                           | Search notes by keyword                        |
+| find-note <field> <value>                     | Find notes: field = keyword or tag             |
 | edit-note <title> <new_text>                  | Edit a note                                    |
 | delete-note <title>                           | Delete a note                                  |
 | add-tag <title> <tag>                         | Add a tag to a note                            |
-| find-notes <tag>                              | Find notes by tag                              |
 | all-tags                                      | Show all tags                                  |
 +-----------------------------------------------+------------------------------------------------+
 """
