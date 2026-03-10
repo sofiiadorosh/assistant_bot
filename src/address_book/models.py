@@ -183,32 +183,33 @@ class AddressBook(UserDict):
         self.data[record.name.value] = record
 
     def find_record_by_name(self, name):
-        if name not in self.data:
-            return None
-        return self.data[name]
+        for stored, record in self.data.items():
+            if stored.lower() == name.lower():
+                return record
+        return None
 
-    def find_records_by_phone(self, phone):
+    def find_record_by_phone(self, phone):
         return [
             contact
             for contact in self.data.values()
             if any(phone == str(contact_phone.value) for contact_phone in contact.phones)
         ]
 
-    def find_records_by_email(self, email):
+    def find_record_by_email(self, email):
         return [
             contact
             for contact in self.data.values()
             if contact.email and email in contact.email.value.lower()
         ]
 
-    def find_records_by_address(self, address):
+    def find_record_by_address(self, address):
         return [
             contact
             for contact in self.data.values()
             if contact.address and address in contact.address.value.lower()
         ]
 
-    def find_records_by_all(self, query):
+    def find_record_by_all(self, query):
         return [
             contact
             for contact in self.data.values()
@@ -223,10 +224,10 @@ class AddressBook(UserDict):
     def find_record(self, field, query):
         methods = {
             "name": self.find_record_by_name,
-            "phone": self.find_records_by_phone,
-            "email": self.find_records_by_email,
-            "address": self.find_records_by_address,
-            "all": self.find_records_by_all,
+            "phone": self.find_record_by_phone,
+            "email": self.find_record_by_email,
+            "address": self.find_record_by_address,
+            "all": self.find_record_by_all,
         }
         method = methods.get(field)
         if not method:

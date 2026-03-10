@@ -42,6 +42,7 @@ def find_notes(args, notes):
         raise ArgumentInvalidError
 
     field = field.lower()
+    value = value.lower()
     methods = {"keyword": notes.find_note_by_keyword, "tag": notes.find_note_by_tag}
 
     if field not in methods:

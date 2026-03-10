@@ -11,7 +11,7 @@ def add_contact(args, contacts: AddressBook):
     except ValueError:
         raise ArgumentInvalidError
 
-    record = contacts.find_record(name)
+    record = contacts.find_record_by_name(name)
 
     if record is None:
         record = Record(name)
@@ -31,7 +31,7 @@ def edit_contact(args, contacts: AddressBook):
     except ValueError:
         raise ArgumentInvalidError
 
-    record = contacts.find_record(name)
+    record = contacts.find_record_by_name(name)
 
     if record is None:
         return f"Contact '{name}' not found. Use 'add-contact' to create."
@@ -48,12 +48,43 @@ def show_phone(args, contacts: AddressBook):
     except ValueError:
         raise ArgumentInvalidError
 
-    record = contacts.find_record(name)
+    record = contacts.find_record_by_name(name)
 
     if record is None:
         return f"Contact '{name}' not found. Use 'add-contact' to create."
 
     return "; ".join(str(phone) for phone in record.phones)
+
+
+@input_error
+def find_contact(args, contacts: AddressBook):
+    try:
+        field, *rest = args
+        if not rest:
+            raise ValueError
+        value = " ".join(rest).strip()
+        if not value:
+            raise ValueError
+    except ValueError:
+        raise ArgumentInvalidError
+
+    field = field.lower()
+    value = value.lower()
+    finders = {"name", "phone", "email", "address", "all"}
+    if field not in finders:
+        return "Invalid field. Use 'name', 'phone', 'email', 'address', or 'all'."
+
+    result = contacts.find_record(field, value)
+    if result is None:
+        records = []
+    elif isinstance(result, list):
+        records = result
+    else:
+        records = [result]
+
+    if not records:
+        return f"No contacts found with {field} '{value}'."
+    return "\n".join(str(record) for record in records)
 
 
 def show_all(args, contacts: AddressBook):
@@ -71,7 +102,7 @@ def add_birthday(args, contacts: AddressBook):
     except ValueError:
         raise ArgumentInvalidError
 
-    record = contacts.find_record(name)
+    record = contacts.find_record_by_name(name)
 
     if record is None:
         return f"Contact '{name}' not found. Use 'add-contact' to create."
@@ -87,7 +118,7 @@ def show_birthday(args, contacts: AddressBook):
     except ValueError:
         raise ArgumentInvalidError
 
-    record = contacts.find_record(name)
+    record = contacts.find_record_by_name(name)
 
     if record is None:
         return f"Contact '{name}' not found. Use 'add-contact' to create."
@@ -106,7 +137,7 @@ def add_email(args, contacts: AddressBook):
     except ValueError:
         raise ArgumentInvalidError
 
-    record = contacts.find_record(name)
+    record = contacts.find_record_by_name(name)
 
     if record is None:
         record = Record(name)
@@ -129,7 +160,7 @@ def edit_email(args, contacts: AddressBook):
     except ValueError:
         raise ArgumentInvalidError
 
-    record = contacts.find_record(name)
+    record = contacts.find_record_by_name(name)
 
     if record is None:
         return f"Contact '{name}' not found. Use 'add-contact' to create."
@@ -153,7 +184,7 @@ def add_address(args, contacts: AddressBook):
     except ValueError:
         raise ArgumentInvalidError
 
-    record = contacts.find_record(name)
+    record = contacts.find_record_by_name(name)
 
     if record is None:
         record = Record(name)
@@ -182,7 +213,7 @@ def edit_address(args, contacts: AddressBook):
     except ValueError:
         raise ArgumentInvalidError
 
-    record = contacts.find_record(name)
+    record = contacts.find_record_by_name(name)
 
     if record is None:
         return f"Contact '{name}' not found. Use 'add-contact' to create."
