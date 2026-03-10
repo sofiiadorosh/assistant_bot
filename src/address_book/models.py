@@ -11,19 +11,19 @@ class AddressBookError(Exception):
     pass
 
 
-class InvalidPhoneError(AddressBookError):
-    pass
-
-
-class InvalidBirthdayError(AddressBookError):
-    pass
-
-
 class PhoneNotFoundError(AddressBookError):
     pass
 
 
 class RecordNotFoundError(AddressBookError):
+    pass
+
+
+class InvalidPhoneError(AddressBookError):
+    pass
+
+
+class InvalidBirthdayError(AddressBookError):
     pass
 
 
@@ -49,9 +49,17 @@ class Field:
 
 class Name(Field):
     def __init__(self, value):
-        if not value or len(value.strip()) < 2:
+        self.value = value
+
+    @property
+    def value(self):
+        return self._value
+
+    @value.setter
+    def value(self, value):
+        if not value or len(str(value).strip()) < 2:
             raise InvalidNameError("Name must be at least 2 characters long.")
-        super().__init__(value.strip())
+        self._value = str(value).strip()
 
 
 class Phone(Field):
@@ -63,10 +71,10 @@ class Phone(Field):
         return self._value
 
     @value.setter
-    def value(self, new_value):
-        if not re.fullmatch(r"\d{10,}", new_value):
+    def value(self, value):
+        if not re.fullmatch(r"\d{10,}", value):
             raise InvalidPhoneError("Phone number must contain at least 10 digits.")
-        self._value = new_value
+        self._value = value
 
 
 class Email(Field):
@@ -78,18 +86,27 @@ class Email(Field):
         return self._value
 
     @value.setter
-    def value(self, new_value):
+    def value(self, value):
         email_regex = r"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
-        if not re.fullmatch(email_regex, new_value):
+        if not re.fullmatch(email_regex, value):
             raise InvalidEmailError("Invalid email format (e.g., user@example.com).")
-        self._value = new_value
+        self._value = value
 
 
 class Address(Field):
     def __init__(self, value):
-        if not value or len(value.strip()) < 3:
+        self.value = value
+
+    @property
+    def value(self):
+        return self._value
+
+    @value.setter
+    def value(self, value):
+        value = str(value).strip()
+        if len(value) < 3:
             raise InvalidAddressError("Address should be at least 3 characters long.")
-        super().__init__(value.strip())
+        self._value = value
 
 
 class Birthday(Field):
@@ -101,9 +118,9 @@ class Birthday(Field):
         return self._value
 
     @value.setter
-    def value(self, new_value):
+    def value(self, value):
         try:
-            birthday_date = datetime.strptime(new_value, "%d.%m.%Y").date()
+            birthday_date = datetime.strptime(value, "%d.%m.%Y").date()
             self._value = birthday_date
         except ValueError:
             raise InvalidBirthdayError("Invalid date format. Use DD.MM.YYYY.")
@@ -144,20 +161,14 @@ class Record:
 
         return None
 
-    def add_birthday(self, birthday):
+    def set_birthday(self, birthday):
         self.birthday = Birthday(birthday)
 
-    def add_email(self, email):
+    def set_email(self, email):
         self.email = Email(email)
 
-    def add_address(self, address):
+    def set_address(self, address):
         self.address = Address(address)
-
-    def update_email(self, new_email):
-        self.email = Email(new_email)
-
-    def update_address(self, new_address):
-        self.address = Address(new_address)
 
     def __str__(self):
         phones = "; ".join(phone.value for phone in self.phones)
