@@ -6,10 +6,11 @@ from src.decorators import input_error, persist_data
 @input_error
 @persist_data
 def add_note(args, note_book):
-    if not args:
+    try:
+        title, *rest = args
+        content = " ".join(rest)
+    except ValueError:
         raise ArgumentInvalidError
-    title = args[0]
-    content = " ".join(args[1:])
 
     note = note_book.find_note(title)
     if note is None:
@@ -27,23 +28,26 @@ def all_notes(args, note_book):
 
 
 @input_error
-def find_note(args, note_book):
+def find_note_by_keyword(args, note_book):
     try:
-        keyword = args[0]
+        (keyword,) = args
     except ValueError:
         raise ArgumentInvalidError
 
-    notes = note_book.search_notes(keyword)
+    notes = note_book.find_notes_by_keyword(keyword)
+    if not notes:
+        return f"No notes found with keyword '{keyword}'."
     return "\n".join(str(note) for note in notes)
 
 
 @input_error
 @persist_data
 def change_note(args, note_book):
-    if not args:
+    try:
+        title, *rest = args
+        content = " ".join(rest)
+    except ValueError:
         raise ArgumentInvalidError
-    title = args[0]
-    content = " ".join(args[1:])
 
     note = note_book.find_note(title)
     if note is None:
@@ -57,7 +61,7 @@ def change_note(args, note_book):
 @persist_data
 def delete_note(args, note_book):
     try:
-        title = args[0]
+        (title,) = args
     except ValueError:
         raise ArgumentInvalidError
 
@@ -82,16 +86,20 @@ def add_tag(args, note_book):
 
 
 @input_error
-def find_notes(args, note_book):
+def find_notes_by_tag(args, note_book):
     try:
-        tag = args[0]
+        (tag,) = args
     except ValueError:
         raise ArgumentInvalidError
 
-    notes = note_book.find_notes(tag)
+    notes = note_book.find_notes_by_tag(tag)
+    if not notes:
+        return f"No notes found with tag '{tag}'."
     return "\n".join(str(note) for note in notes)
 
 
 @input_error
 def all_tags(args, note_book):
+    if not note_book.all_tags():
+        return "No tags found."
     return ", ".join(note_book.all_tags())

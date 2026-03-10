@@ -87,15 +87,14 @@ python main.py
 
 | Command | Description |
 |---------|-------------|
-| `add-note <text>` | Add a new note |
+| `add-note <title> <text>` | Add a new note |
 | `all-notes` | Display all notes |
 | `find-note <keyword>` | Search notes by keyword |
-| `change-note <id> <new_text>` | Edit an existing note |
-| `delete-note <id>` | Delete a note |
-| `add-tag <note_id> <tag>` | Add a tag to a note |
+| `change-note <title> <new_text>` | Edit an existing note |
+| `delete-note <title>` | Delete a note |
+| `add-tag <title> <tag>` | Add a tag to a note |
 | `find-notes <tag>` | Find notes by tag |
 | `all-tags` | Show all tags |
-| `sort-notes` | Sort and display notes by tags |
 
 ## Data Storage
 
@@ -130,12 +129,17 @@ assistant_bot/
 └── src/
     ├── __init__.py         # Package initialization
     ├── cli.py              # Command-line interface and input parsing
-    ├── commands.py         # Command handler functions
-    ├── models.py           # Data models (Contact, AddressBook, Note, NoteBook)
-    ├── store.py            # Data persistence utilities
-    ├── decorators.py       # Decorator functions (input error handling)
+    ├── commands.py         # General command handlers (hello, help, exit)
+    ├── decorators.py       # Decorator functions (input error handling, persist_data)
     ├── exceptions.py       # Custom exception classes
-    └── validators.py       # Input validation functions (phone, email, date)
+    ├── address_book/       # Contact management
+    │   ├── commands.py     # Contact command handlers
+    │   ├── models.py       # AddressBook, Record, and contact-related models
+    │   └── store.py        # Address book persistence (load/save)
+    └── note_book/          # Notes management
+        ├── commands.py     # Note command handlers
+        ├── models.py       # NoteBook, Note, and tag models
+        └── store.py        # Note book persistence (load/save)
 ```
 
 ## Technologies

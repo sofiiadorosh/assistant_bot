@@ -31,10 +31,10 @@ class NoteBook(UserDict):
             raise NoteNotFoundError(f"Note '{title}' not found.")
         del self.data[title]
 
-    def search_notes(self, query):
+    def find_notes_by_keyword(self, query):
         return [note for note in self.data.values() if query in note.title or query in note.content]
 
-    def find_notes(self, tag):
+    def find_notes_by_tag(self, tag):
         return [note for note in self.data.values() if tag in note.tags]
 
     def all_tags(self):
