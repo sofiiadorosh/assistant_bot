@@ -87,18 +87,18 @@ def main():
         notes_action = notes_commands.get(command.lower())
 
         if common_action:
-            result = common_action(args, contacts, notes)
+            result = common_action(args, contacts=contacts, notes=notes)
             if result == "exit":
                 print("Goodbye!")
                 break
             if result:
                 print(result)
         elif contacts_action:
-            result = contacts_action(args, contacts)
+            result = contacts_action(args, contacts=contacts)
             if result:
                 print(result)
         elif notes_action:
-            result = notes_action(args, notes)
+            result = notes_action(args, notes=notes)
             if result:
                 print(result)
         else:

@@ -1,7 +1,7 @@
 from src.decorators import persist_data
 
 
-def hello(args, contacts):
+def hello(args, contacts, notes):
     return "Welcome! Type 'help' to see available commands. How can I help you?"
 
 

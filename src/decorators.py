@@ -38,15 +38,14 @@ def persist_data(func):
     def inner(*args, **kwargs):
         result = func(*args, **kwargs)
 
-        if result == "exit":
-            save_address_book(args[1])
-            save_note_book(args[2])
-            return result
-
-        if isinstance(args[1], AddressBook):
-            save_address_book(args[1])
-        elif isinstance(args[1], NoteBook):
-            save_note_book(args[1])
+        contacts = kwargs.get("contacts")
+        notes = kwargs.get("notes")
+        
+        if isinstance(contacts, AddressBook):
+            save_address_book(contacts)
+        
+        if isinstance(notes, NoteBook):
+            save_note_book(notes)
 
         return result
     return inner
