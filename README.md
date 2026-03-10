@@ -19,14 +19,10 @@ A command-line interface (CLI) personal assistant application for managing conta
 
 ### Notes Management
 
-- **Add text notes** with custom content
-- **Search notes** by keywords
+- **Add notes** with title and content
+- **Search notes** by various criteria (e.g., by keyword or tag)
 - **Edit and delete** notes
-
-### Additional Features (Tags)
-
-- **Add tags** to notes - keywords that describe the topic and subject of the note
-- **Search and sort notes** by tags/keywords
+- **Add tags** to notes and list all tags
 
 ### Intelligent Analysis
 
@@ -65,32 +61,51 @@ python main.py
 | `help` | Display all available commands |
 | `close` / `exit` | Exit the assistant |
 
-#### Contact Commands
+#### Contacts
 
 | Command | Description |
 |---------|-------------|
 | `add-contact <name> <phone>` | Add a new contact with name and phone number |
-| `edit-contact <name> <old_phone> <new_phone>` | Change a contact's phone number |
-| `show-phone <name>` | Show phone number(s) for a contact |
 | `all-contacts` | Display all contacts |
-| `add-birthday <name> <date>` | Add a birthday to a contact (DD.MM.YYYY) |
-| `show-birthday <name>` | Show birthday for a contact |
-| `birthdays <days>` | Show contacts with birthdays in the next N days |
-| `add-email <name> <email>` | Add an email address to a contact |
-| `edit-email <name> <new_email>` | Update an existing email address |
-| `add-address <name> <address>` | Add a physical address to a contact |
-| `edit-address <name> <new_address>` | Update an existing physical address |
-| `search-contacts <field> <query>` | Search contacts by field: `name`, `phone`, `email`, `address`, or `all` |
 | `delete-contact <name>` | Delete a contact |
 
-#### Notes Commands
+#### Phone
 
 | Command | Description |
 |---------|-------------|
-| `add-note <title> <text>` | Add a new note |
+| `edit-contact <name> <old_phone> <new_phone>` | Change a contact's phone number |
+| `show-phone <name>` | Show phone number(s) for a contact |
+
+#### Birthday
+
+| Command | Description |
+|---------|-------------|
+| `add-birthday <name> <date>` | Add a birthday to a contact (DD.MM.YYYY) |
+| `show-birthday <name>` | Show birthday for a contact |
+| `birthdays <days>` | Show contacts with birthdays in the next N days |
+
+#### Email
+
+| Command | Description |
+|---------|-------------|
+| `add-email <name> <email>` | Add an email address to a contact |
+| `edit-email <name> <new_email>` | Update an existing email address |
+
+#### Address
+
+| Command | Description |
+|---------|-------------|
+| `add-address <name> <address>` | Add a physical address to a contact |
+| `edit-address <name> <new_address>` | Update an existing physical address |
+
+#### Notes
+
+| Command | Description |
+|---------|-------------|
+| `add-note <title> <content>` | Add a new note |
 | `all-notes` | Display all notes |
 | `find-note <field> <value>` | Find notes by keyword or tag (field: `keyword` or `tag`) |
-| `edit-note <title> <new_text>` | Edit an existing note |
+| `edit-note <title> <content>` | Edit an existing note |
 | `delete-note <title>` | Delete a note |
 | `add-tag <title> <tag>` | Add a tag to a note |
 | `all-tags` | Show all tags |
@@ -103,20 +118,32 @@ All data (contacts, notes) is stored on the hard drive in the user's folder:
 
 ## Validation Rules
 
-### Phone Number
+### Contacts
+
+#### Name
+- Must be at least 2 characters long (after trimming whitespace)
+- Cannot be empty
+
+#### Phone
 - Must contain only digits
-- Should be a valid phone number format (e.g., 10+ digits)
+- At least 10 digits (e.g., `12025551234`)
 
-### Email
+#### Email
 - Must follow standard email format (e.g., `user@example.com`)
-- Validated using regex pattern matching
 
-### Birthday
-- Must be in a valid date format (DD.MM.YYYY)
-- Cannot be a future date
+#### Birthday
+- Must be in date format **DD.MM.YYYY** (e.g., `25.12.1990`)
 
-### Address
-- Must be at least 3 characters long.
+#### Address
+- Must be at least 3 characters long (after trimming whitespace)
+
+### Notes
+
+#### Title
+- Cannot be empty or only whitespace
+
+#### Content
+- Cannot be empty or only whitespace
 
 ## Project Structure
 
@@ -125,20 +152,24 @@ assistant_bot/
 ├── main.py                 # Application entry point
 ├── README.md               # Project documentation
 ├── requirements.txt        # Project dependencies
+├── .gitignore
+├── samples/                # Sample data (JSON)
+│   ├── contacts.json       # Sample contacts
+│   └── notes.json          # Sample notes
 └── src/
     ├── __init__.py         # Package initialization
     ├── cli.py              # Command-line interface and input parsing
-    ├── commands.py         # General command handlers (hello, help, exit)
-    ├── decorators.py       # Decorator functions (input error handling, persist_data)
+    ├── commands.py         # General commands (hello, help, exit)
+    ├── decorators.py       # Input error handling, persist_data
     ├── exceptions.py       # Custom exception classes
     ├── address_book/       # Contact management
     │   ├── commands.py     # Contact command handlers
-    │   ├── models.py       # AddressBook, Record, and contact-related models
-    │   └── store.py        # Address book persistence (load/save)
+    │   ├── models.py       # AddressBook, Record, field models
+    │   └── store.py        # Load/save contacts (JSON)
     └── note_book/          # Notes management
         ├── commands.py     # Note command handlers
-        ├── models.py       # NoteBook, Note, and tag models
-        └── store.py        # Note book persistence (load/save)
+        ├── models.py       # NoteBook, Note, Title, Content, tags
+        └── store.py        # Load/save notes (JSON)
 ```
 
 ## Technologies
