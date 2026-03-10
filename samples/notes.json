@@ -1,0 +1,102 @@
+{
+  "Alpha": {
+    "title": "Alpha",
+    "content": "Kickoff meeting next Monday. Prepare slides and budget draft.",
+    "tags": ["work", "meeting"]
+  },
+  "Grocery": {
+    "title": "Grocery",
+    "content": "Milk, bread, eggs, coffee.",
+    "tags": []
+  },
+  "Books": {
+    "title": "Books",
+    "content": "Sci-fi novel about first contact. Mystery set in old Lviv.",
+    "tags": ["personal", "creative"]
+  },
+  "Dentist": {
+    "title": "Dentist",
+    "content": "Annual checkup scheduled for March 25 at 10:00.",
+    "tags": ["health"]
+  },
+  "Trip": {
+    "title": "Trip",
+    "content": "Carpathians in summer. Book cottage, check hiking routes.",
+    "tags": ["travel", "vacation"]
+  },
+  "Passwords": {
+    "title": "Passwords",
+    "content": "Use password manager. Do not store here.",
+    "tags": []
+  },
+  "Standup": {
+    "title": "Standup",
+    "content": "Daily at 9:30. Block calendar. Discuss blockers only.",
+    "tags": ["work"]
+  },
+  "Borscht": {
+    "title": "Borscht",
+    "content": "Beetroot, cabbage, potato, meat, bay leaf. Sour cream on top.",
+    "tags": ["cooking", "recipe"]
+  },
+  "Birthday": {
+    "title": "Birthday",
+    "content": "April 12. Order flowers, book restaurant.",
+    "tags": ["family", "birthday"]
+  },
+  "Python": {
+    "title": "Python",
+    "content": "Finish async chapter. Do exercises 5–7 from the book.",
+    "tags": ["study", "python"]
+  },
+  "Car": {
+    "title": "Car",
+    "content": "Oil change and tires. Call service center tomorrow.",
+    "tags": []
+  },
+  "Conference": {
+    "title": "Conference",
+    "content": "Submit abstract by May 1. Topic: APIs and security.",
+    "tags": ["work", "conference"]
+  },
+  "Gym": {
+    "title": "Gym",
+    "content": "Mon Wed Fri 7am. Focus on legs this month.",
+    "tags": ["health", "fitness"]
+  },
+  "Movies": {
+    "title": "Movies",
+    "content": "Dune 2, new Nolan film, Ukrainian documentaries.",
+    "tags": ["personal"]
+  },
+  "Invoice": {
+    "title": "Invoice",
+    "content": "Send invoice to client X by end of week. Payment terms 14 days.",
+    "tags": ["work", "finance"]
+  },
+  "Gift": {
+    "title": "Gift",
+    "content": "Birthday in June. She likes books and plants.",
+    "tags": ["personal", "gifts"]
+  },
+  "Chores": {
+    "title": "Chores",
+    "content": "Clean fridge, fix shelf in bathroom, order bulbs.",
+    "tags": []
+  },
+  "Interview": {
+    "title": "Interview",
+    "content": "Review system design. Practice STAR stories. Company research.",
+    "tags": ["work", "career"]
+  },
+  "Weekend": {
+    "title": "Weekend",
+    "content": "Park, museum, or just rest at home with a book.",
+    "tags": ["personal"]
+  },
+  "Backup": {
+    "title": "Backup",
+    "content": "Monthly backup first Sunday. Check cloud and external drive.",
+    "tags": ["tech", "reminder"]
+  }
+}

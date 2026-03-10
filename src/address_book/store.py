@@ -1,19 +1,42 @@
-from pickle import dump, load
+import json
 
-from src.address_book.models import AddressBook
+from src.address_book.models import AddressBook, Record
 
 
-FILENAME = "address_book.pkl"
+FILENAME = "samples/contacts.json"
 
 
 def save_data(book, filename=FILENAME):
-    with open(filename, "wb") as fh:
-        dump(book, fh)
+    contacts = {}
+    for name, record in book.data.items():
+        contacts[name] = {
+            "name": record.name.value,
+            "phones": [phone.value for phone in record.phones],
+            "birthday": record.birthday.value.strftime("%d.%m.%Y") if record.birthday else None,
+            "email": record.email.value if record.email else None,
+            "address": record.address.value if record.address else None,
+        }
+    with open(filename, "w", encoding="utf-8") as fh:
+        json.dump(contacts, fh, indent=2, ensure_ascii=False)
 
 
 def load_data(filename=FILENAME):
     try:
-        with open(filename, "rb") as fh:
-            return load(fh)
+        with open(filename, "r", encoding="utf-8") as fh:
+            contacts = json.load(fh)
     except FileNotFoundError:
         return AddressBook()
+
+    book = AddressBook()
+    for name, contact in contacts.items():
+        record = Record(contact["name"])
+        for phone in contact.get("phones", []):
+            record.add_phone(phone)
+        if contact.get("birthday"):
+            record.set_birthday(contact["birthday"])
+        if contact.get("email"):
+            record.set_email(contact["email"])
+        if contact.get("address"):
+            record.set_address(contact["address"])
+        book.add_record(record)
+    return book

@@ -24,28 +24,38 @@ def show_help(args, contacts, notes):
 | CONTACTS                                                                                       |
 +-----------------------------------------------+------------------------------------------------+
 | add-contact <name> <phone>                    | Add a new contact                              |
-| change-contact <name> <old_phone> <new_phone> | Change phone number                            |
-| show-phone <name>                             | Show phone number(s)                           |
 | all-contacts                                  | Display all contacts                           |
+| delete-contact <name>                         | Delete a contact                               |
++-----------------------------------------------+------------------------------------------------+
+| PHONE                                                                                          |
++-----------------------------------------------+------------------------------------------------+
+| edit-contact <name> <old_phone> <new_phone>   | Change phone number                            |
+| show-phone <name>                             | Show phone number(s)                           |
++-----------------------------------------------+------------------------------------------------+
+| BIRTHDAY                                                                                       |
++-----------------------------------------------+------------------------------------------------+
 | add-birthday <name> <DD.MM.YYYY>              | Add birthday                                   |
 | show-birthday <name>                          | Show birthday                                  |
 | birthdays <days>                              | Upcoming birthdays                             |
++-----------------------------------------------+------------------------------------------------+
+| EMAIL                                                                                          |
++-----------------------------------------------+------------------------------------------------+
 | add-email <name> <email>                      | Add email to contact                           |
 | edit-email <name> <new_email>                 | Update existing email                          |
++-----------------------------------------------+------------------------------------------------+
+| ADDRESS                                                                                        |
++-----------------------------------------------+------------------------------------------------+
 | add-address <name> <address>                  | Add address to contact                         |
-| edit-address <name> <new_address>             | Update existing address                       |
-| search-contacts <field> <query>               | Search by: name, phone, email, address, all    |
-| delete-contact <name>                         | Delete a contact                               |
+| edit-address <name> <new_address>             | Update existing address                        |
 +-----------------------------------------------+------------------------------------------------+
 | NOTES                                                                                          |
 +-----------------------------------------------+------------------------------------------------+
-| add-note <title> <text>                       | Add a new note                                 |
+| add-note <title> <content>                    | Add a new note                                 |
 | all-notes                                     | Display all notes                              |
-| find-note <keyword>                           | Search notes by keyword                        |
-| change-note <title> <new_text>                | Edit a note                                    |
+| find-note <field> <value>                     | Find notes: field = keyword or tag             |
+| edit-note <title> <content>                   | Edit a note                                    |
 | delete-note <title>                           | Delete a note                                  |
 | add-tag <title> <tag>                         | Add a tag to a note                            |
-| find-notes <tag>                              | Find notes by tag                              |
 | all-tags                                      | Show all tags                                  |
 +-----------------------------------------------+------------------------------------------------+
 """
