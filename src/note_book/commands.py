@@ -1,5 +1,5 @@
 from src.exceptions import ArgumentInvalidError
-from src.note_book.models import Note, Content
+from src.note_book.models import Note
 from src.decorators import input_error, persist_data
 
 
@@ -18,7 +18,7 @@ def add_note(args, notes):
         notes.add_note(note)
         return f"Note '{title}' added."
 
-    note.content = Content(content)
+    note.edit_content(content)
     return f"Note '{title}' updated."
 
 
@@ -42,6 +42,7 @@ def find_notes(args, notes):
         raise ArgumentInvalidError
 
     field = field.lower()
+    value = value.lower()
     methods = {"keyword": notes.find_note_by_keyword, "tag": notes.find_note_by_tag}
 
     if field not in methods:
@@ -66,7 +67,7 @@ def edit_note(args, notes):
     if note is None:
         return f"Note '{title}' not found."
 
-    note.content = Content(content)
+    note.edit_content(content)
     return f"Note '{title}' updated."
 
 
@@ -78,7 +79,11 @@ def delete_note(args, notes):
     except ValueError:
         raise ArgumentInvalidError
 
-    notes.delete_note(title)
+    note = notes.find_note_by_title(title)
+    if note is None:
+        return f"Note '{title}' not found."
+
+    notes.delete_note(note.title.value)
     return f"Note '{title}' deleted."
 
 

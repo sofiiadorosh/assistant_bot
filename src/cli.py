@@ -18,6 +18,7 @@ from src.address_book.commands import (
     add_address,
     edit_address,
     delete_contact,
+    find_contact,
 )
 from src.note_book.commands import (
     add_note,
@@ -61,6 +62,7 @@ def main():
         "edit-email": edit_email,
         "add-address": add_address,
         "edit-address": edit_address,
+        "find-contact": find_contact,
         "delete-contact": delete_contact,
     }
 

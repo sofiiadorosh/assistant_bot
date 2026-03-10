@@ -25,6 +25,7 @@ def show_help(args, contacts, notes):
 +-----------------------------------------------+------------------------------------------------+
 | add-contact <name> <phone>                    | Add a new contact                              |
 | all-contacts                                  | Display all contacts                           |
+| find-contact <field> <query>                  | Find by: name, phone, email, address, all      |
 | delete-contact <name>                         | Delete a contact                               |
 +-----------------------------------------------+------------------------------------------------+
 | PHONE                                                                                          |

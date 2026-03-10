@@ -11,10 +11,6 @@ class AddressBookError(Exception):
     pass
 
 
-class PhoneNotFoundError(AddressBookError):
-    pass
-
-
 class RecordNotFoundError(AddressBookError):
     pass
 
@@ -152,7 +148,6 @@ class Record:
             if existing_phone.value == old_phone:
                 existing_phone.value = new_phone
                 return
-        raise PhoneNotFoundError("Phone number not found.")
 
     def find_phone(self, phone):
         for existing_phone in self.phones:
@@ -182,14 +177,59 @@ class AddressBook(UserDict):
     def add_record(self, record):
         self.data[record.name.value] = record
 
-    def find_record(self, name):
-        if name not in self.data:
-            return None
-        return self.data[name]
+    def find_record_by_name(self, name):
+        for stored, record in self.data.items():
+            if stored.lower() == name.lower():
+                return record
+        return None
+
+    def find_record_by_phone(self, phone):
+        return [
+            contact
+            for contact in self.data.values()
+            if any(phone == str(contact_phone.value) for contact_phone in contact.phones)
+        ]
+
+    def find_record_by_email(self, email):
+        return [
+            contact
+            for contact in self.data.values()
+            if contact.email and email in contact.email.value.lower()
+        ]
+
+    def find_record_by_address(self, address):
+        return [
+            contact
+            for contact in self.data.values()
+            if contact.address and address in contact.address.value.lower()
+        ]
+
+    def find_record_by_all(self, query):
+        return [
+            contact
+            for contact in self.data.values()
+            if (
+                query in contact.name.value.lower()
+                or any(query in str(phone.value) for phone in contact.phones)
+                or (contact.email and query in contact.email.value.lower())
+                or (contact.address and query in contact.address.value.lower())
+            )
+        ]
+
+    def find_record(self, field, query):
+        methods = {
+            "name": self.find_record_by_name,
+            "phone": self.find_record_by_phone,
+            "email": self.find_record_by_email,
+            "address": self.find_record_by_address,
+            "all": self.find_record_by_all,
+        }
+        method = methods.get(field)
+        if not method:
+            return []
+        return method(query)
 
     def delete_record(self, name):
-        if name not in self.data:
-            raise RecordNotFoundError(f"Contact '{name}' not found.")
         del self.data[name]
 
     def get_upcoming_birthdays(self, days):
