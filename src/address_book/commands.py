@@ -2,6 +2,7 @@ from src.exceptions import ArgumentInvalidError, DaysInvalidError
 from src.address_book.models import AddressBook, Record
 from src.decorators import input_error, persist_data
 
+
 @input_error
 @persist_data
 def add_contact(args, contacts: AddressBook):
@@ -24,7 +25,7 @@ def add_contact(args, contacts: AddressBook):
 
 @input_error
 @persist_data
-def change_contact(args, contacts: AddressBook):
+def edit_contact(args, contacts: AddressBook):
     try:
         name, old_phone, new_phone = args
     except ValueError:
@@ -33,7 +34,7 @@ def change_contact(args, contacts: AddressBook):
     record = contacts.find_record(name)
 
     if record is None:
-        return f"Contact '{name}' does not exist. Use 'add' to create."
+        return f"Contact '{name}' not found. Use 'add-contact' to create."
 
     record.edit_phone(old_phone, new_phone)
 
@@ -50,14 +51,14 @@ def show_phone(args, contacts: AddressBook):
     record = contacts.find_record(name)
 
     if record is None:
-        return f"Contact '{name}' does not exist. Use 'add' to create."
+        return f"Contact '{name}' not found. Use 'add-contact' to create."
 
     return "; ".join(str(phone) for phone in record.phones)
 
 
 def show_all(args, contacts: AddressBook):
     if not contacts:
-        return "No contacts yet. Use 'add' to create."
+        return "No contacts yet. Use 'add-contact' to create."
 
     return "\n".join(str(record) for record in contacts.values())
 
@@ -73,9 +74,9 @@ def add_birthday(args, contacts: AddressBook):
     record = contacts.find_record(name)
 
     if record is None:
-        return f"Contact '{name}' does not exist. Use 'add' to create."
+        return f"Contact '{name}' not found. Use 'add-contact' to create."
 
-    record.add_birthday(birthday)
+    record.set_birthday(birthday)
     return f"Contact '{name}' updated."
 
 
@@ -89,10 +90,10 @@ def show_birthday(args, contacts: AddressBook):
     record = contacts.find_record(name)
 
     if record is None:
-        return f"Contact '{name}' does not exist. Use 'add' to create."
+        return f"Contact '{name}' not found. Use 'add-contact' to create."
 
     if not record.birthday:
-        return f"Birthday for '{name}' is not set."
+        return f"Contact '{name}' has no birthday set."
 
     return str(record.birthday)
 
@@ -110,14 +111,14 @@ def add_email(args, contacts: AddressBook):
     if record is None:
         record = Record(name)
         contacts.add_record(record)
-        record.add_email(email)
-        return f"Contact '{name}' added with email."
+        record.set_email(email)
+        return f"Contact '{name}' added."
 
     if record.email:
         return f"Contact '{name}' already has an email. Use 'edit-email' to change it."
 
-    record.add_email(email)
-    return f"Email added for contact '{name}'."
+    record.set_email(email)
+    return f"Contact '{name}' updated."
 
 
 @input_error
@@ -131,13 +132,13 @@ def edit_email(args, contacts: AddressBook):
     record = contacts.find_record(name)
 
     if record is None:
-        return f"Contact '{name}' does not exist. Use 'add-contact' to create."
+        return f"Contact '{name}' not found. Use 'add-contact' to create."
 
     if not record.email:
-        return f"Contact '{name}' doesn't have an email yet. Use 'add-email' first."
+        return f"Contact '{name}' doesn't have an email yet. Use 'add-email' to set it."
 
-    record.update_email(new_email)
-    return f"Email updated for contact '{name}'."
+    record.set_email(new_email)
+    return f"Contact '{name}' updated."
 
 
 @input_error
@@ -156,17 +157,17 @@ def add_address(args, contacts: AddressBook):
 
     if record is None:
         record = Record(name)
-        record.add_address(address)
+        record.set_address(address)
         contacts.add_record(record)
-        return f"Contact '{name}' added with address."
+        return f"Contact '{name}' added."
 
     if record.address:
         return (
             f"Contact '{name}' already has an address. Use 'edit-address' to change it."
         )
 
-    record.add_address(address)
-    return f"Address added for contact '{name}'."
+    record.set_address(address)
+    return f"Contact '{name}' updated."
 
 
 @input_error
@@ -184,13 +185,13 @@ def edit_address(args, contacts: AddressBook):
     record = contacts.find_record(name)
 
     if record is None:
-        return f"Contact '{name}' does not exist. Use 'add-contact' to create."
+        return f"Contact '{name}' not found. Use 'add-contact' to create."
 
     if not record.address:
-        return f"Contact '{name}' doesn't have an address yet. Use 'add-address' first."
+        return f"Contact '{name}' doesn't have an address yet. Use 'add-address' to set it."
 
-    record.update_address(address)
-    return f"Address updated for contact '{name}'."
+    record.set_address(address)
+    return f"Contact '{name}' updated."
 
 
 @input_error
@@ -205,7 +206,7 @@ def delete_contact(args, contacts: AddressBook):
         return f"Contact '{name}' not found."
 
     contacts.delete_record(name)
-    return f"Contact '{name}' deleted successfully."
+    return f"Contact '{name}' deleted."
 
 
 @input_error
@@ -223,7 +224,7 @@ def get_upcoming_birthdays(args, contacts: AddressBook):
         raise DaysInvalidError()
 
     if not contacts:
-        return "No contacts yet. Use 'add' to create."
+        return "No contacts yet. Use 'add-contact' to create."
 
     upcoming_birthdays = contacts.get_upcoming_birthdays(days)
 

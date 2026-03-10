@@ -7,7 +7,7 @@ from src.commands import (
 )
 from src.address_book.commands import (
     add_contact,
-    change_contact,
+    edit_contact,
     show_phone,
     show_all,
     add_birthday,
@@ -23,7 +23,7 @@ from src.note_book.commands import (
     add_note,
     all_notes,
     find_note_by_keyword,
-    change_note,
+    edit_note,
     delete_note,
     add_tag,
     find_notes_by_tag,
@@ -52,7 +52,7 @@ def main():
 
     contacts_commands = {
         "add-contact": add_contact,
-        "change-contact": change_contact,
+        "edit-contact": edit_contact,
         "show-phone": show_phone,
         "all-contacts": show_all,
         "add-birthday": add_birthday,
@@ -69,7 +69,7 @@ def main():
         "add-note": add_note,
         "all-notes": all_notes,
         "find-note": find_note_by_keyword,
-        "change-note": change_note,
+        "edit-note": edit_note,
         "delete-note": delete_note,
         "add-tag": add_tag,
         "find-notes": find_notes_by_tag,

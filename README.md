@@ -70,7 +70,7 @@ python main.py
 | Command | Description |
 |---------|-------------|
 | `add-contact <name> <phone>` | Add a new contact with name and phone number |
-| `change-contact <name> <old_phone> <new_phone>` | Change a contact's phone number |
+| `edit-contact <name> <old_phone> <new_phone>` | Change a contact's phone number |
 | `show-phone <name>` | Show phone number(s) for a contact |
 | `all-contacts` | Display all contacts |
 | `add-birthday <name> <date>` | Add a birthday to a contact (DD.MM.YYYY) |
@@ -90,7 +90,7 @@ python main.py
 | `add-note <title> <text>` | Add a new note |
 | `all-notes` | Display all notes |
 | `find-note <keyword>` | Search notes by keyword |
-| `change-note <title> <new_text>` | Edit an existing note |
+| `edit-note <title> <new_text>` | Edit an existing note |
 | `delete-note <title>` | Delete a note |
 | `add-tag <title> <tag>` | Add a tag to a note |
 | `find-notes <tag>` | Find notes by tag |
