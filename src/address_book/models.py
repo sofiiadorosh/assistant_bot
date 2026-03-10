@@ -11,10 +11,6 @@ class AddressBookError(Exception):
     pass
 
 
-class PhoneNotFoundError(AddressBookError):
-    pass
-
-
 class RecordNotFoundError(AddressBookError):
     pass
 
@@ -152,7 +148,6 @@ class Record:
             if existing_phone.value == old_phone:
                 existing_phone.value = new_phone
                 return
-        raise PhoneNotFoundError("Phone number not found.")
 
     def find_phone(self, phone):
         for existing_phone in self.phones:

@@ -5,10 +5,6 @@ class NoteBookError(Exception):
     pass
 
 
-class NoteNotFoundError(NoteBookError):
-    pass
-
-
 class InvalidTitleError(NoteBookError):
     pass
 
@@ -65,6 +61,9 @@ class Note:
         tag = (tag or "").strip()
         if tag and tag not in self.tags:
             self.tags.append(tag)
+
+    def edit_content(self, content):
+        self.content = Content(content)
 
     def __str__(self):
         return f"Title: {self.title}, Content: {self.content}, Tags: {', '.join(self.tags)}"

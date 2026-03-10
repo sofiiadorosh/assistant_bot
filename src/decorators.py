@@ -23,12 +23,12 @@ def input_error(func):
         except DaysInvalidError:
             return "Days must be a non-negative integer."
         except (
+            RecordNotFoundError,
             InvalidPhoneError,
             InvalidEmailError,
             InvalidBirthdayError,
-            RecordNotFoundError,
             InvalidTitleError,
-            InvalidContentError,
+            InvalidContentError
         ) as e:
             return str(e)
         except ArgumentInvalidError:

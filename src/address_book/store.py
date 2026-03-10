@@ -38,7 +38,7 @@ def load_data(filename=FILENAME):
         try:
             record = Record(contact["name"])
             for phone in contact.get("phones", []):
-                record.add_phone(phone)
+                record.add_phone(str(phone))
             if contact.get("birthday"):
                 record.set_birthday(contact["birthday"])
             if contact.get("email"):

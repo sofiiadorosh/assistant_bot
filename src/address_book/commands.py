@@ -36,6 +36,10 @@ def edit_contact(args, contacts: AddressBook):
     if record is None:
         return f"Contact '{name}' not found. Use 'add-contact' to create."
 
+    phone = record.find_phone(old_phone)
+    if phone is None:
+        return f"Contact '{name}' does not have phone '{old_phone}'. Use 'add-contact' to add it."
+
     record.edit_phone(old_phone, new_phone)
 
     return f"Contact '{name}' updated."
@@ -243,16 +247,12 @@ def delete_contact(args, contacts: AddressBook):
 
 @input_error
 def get_upcoming_birthdays(args, contacts: AddressBook):
-    if not args:
-        raise ArgumentInvalidError
-
-    (days,) = args
-
     try:
+        (days,) = args
         days = int(days)
         if days < 0:
             raise ValueError
-    except ValueError:
+    except (ValueError, TypeError):
         raise DaysInvalidError()
 
     if not contacts:

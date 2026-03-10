@@ -1,5 +1,5 @@
 from src.exceptions import ArgumentInvalidError
-from src.note_book.models import Note, Content
+from src.note_book.models import Note
 from src.decorators import input_error, persist_data
 
 
@@ -18,7 +18,7 @@ def add_note(args, notes):
         notes.add_note(note)
         return f"Note '{title}' added."
 
-    note.content = Content(content)
+    note.edit_content(content)
     return f"Note '{title}' updated."
 
 
@@ -67,7 +67,7 @@ def edit_note(args, notes):
     if note is None:
         return f"Note '{title}' not found."
 
-    note.content = Content(content)
+    note.edit_content(content)
     return f"Note '{title}' updated."
 
 
