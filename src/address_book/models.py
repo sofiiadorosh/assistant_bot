@@ -235,8 +235,6 @@ class AddressBook(UserDict):
         return method(query)
 
     def delete_record(self, name):
-        if name not in self.data:
-            raise RecordNotFoundError(f"Contact '{name}' not found.")
         del self.data[name]
 
     def get_upcoming_birthdays(self, days):

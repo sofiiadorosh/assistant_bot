@@ -62,7 +62,9 @@ class Note:
         self.tags = []
 
     def add_tag(self, tag):
-        self.tags.append(tag)
+        tag = (tag or "").strip()
+        if tag and tag not in self.tags:
+            self.tags.append(tag)
 
     def __str__(self):
         return f"Title: {self.title}, Content: {self.content}, Tags: {', '.join(self.tags)}"
@@ -73,13 +75,12 @@ class NoteBook(UserDict):
         self.data[note.title.value] = note
 
     def find_note_by_title(self, title):
-        if title not in self.data:
-            return None
-        return self.data[title]
+        for stored, note in self.data.items():
+            if stored.lower() == title.lower():
+                return note
+        return None
 
     def delete_note(self, title):
-        if title not in self.data:
-            raise NoteNotFoundError(f"Note '{title}' not found.")
         del self.data[title]
 
     def find_note_by_keyword(self, keyword):

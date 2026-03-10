@@ -233,10 +233,11 @@ def delete_contact(args, contacts: AddressBook):
     except ValueError:
         raise ArgumentInvalidError
 
-    if name not in contacts:
+    record = contacts.find_record_by_name(name)
+    if record is None:
         return f"Contact '{name}' not found."
 
-    contacts.delete_record(name)
+    contacts.delete_record(record.name.value)
     return f"Contact '{name}' deleted."
 
 
