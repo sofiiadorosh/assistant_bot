@@ -24,6 +24,8 @@ def add_note(args, note_book):
 
 @input_error
 def all_notes(args, note_book):
+    if not note_book.values():
+        return "No notes found."
     return "\n".join(str(note) for note in note_book.values())
 
 
