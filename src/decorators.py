@@ -1,12 +1,15 @@
 from src.exceptions import ArgumentInvalidError, DaysInvalidError
-from src.models import (
+from src.address_book.models import (
     AddressBookError,
     InvalidPhoneError,
     InvalidEmailError,
     InvalidBirthdayError,
     RecordNotFoundError,
+    AddressBook,
 )
-from src.store import save_data
+from src.note_book.models import NoteBook
+from src.address_book.store import save_data as save_address_book
+from src.note_book.store import save_data as save_note_book
 
 
 def input_error(func):
@@ -34,6 +37,16 @@ def input_error(func):
 def persist_data(func):
     def inner(*args, **kwargs):
         result = func(*args, **kwargs)
-        save_data(args[1])
+
+        if result == "exit":
+            save_address_book(args[1])
+            save_note_book(args[2])
+            return result
+
+        if isinstance(args[1], AddressBook):
+            save_address_book(args[1])
+        elif isinstance(args[1], NoteBook):
+            save_note_book(args[1])
+
         return result
     return inner

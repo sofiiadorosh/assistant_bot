@@ -1,8 +1,11 @@
-from src.store import load_data
+from src.address_book.store import load_data as load_address_book
+from src.note_book.store import load_data as load_note_book
 from src.commands import (
     hello,
     exit_program,
     show_help,
+)
+from src.address_book.commands import (
     add_contact,
     change_contact,
     show_phone,
@@ -16,6 +19,16 @@ from src.commands import (
     edit_address,
     delete_contact,
 )
+from src.note_book.commands import (
+    add_note,
+    all_notes,
+    find_note,
+    change_note,
+    delete_note,
+    add_tag,
+    find_notes,
+    all_tags,
+)
 
 
 def parse_input(user_input):
@@ -25,13 +38,19 @@ def parse_input(user_input):
 
 
 def main():
-    contacts = load_data()
+    contacts = load_address_book()
+    notes = load_note_book()
     print("Welcome to the assistant bot!")
-    print(show_help([], contacts))
+    print(show_help([], contacts, notes))
 
-    commands = {
+    common_commands = {
         "hello": hello,
         "help": show_help,
+        "close": exit_program,
+        "exit": exit_program,
+    }
+
+    contacts_commands = {
         "add-contact": add_contact,
         "change-contact": change_contact,
         "show-phone": show_phone,
@@ -44,8 +63,17 @@ def main():
         "add-address": add_address,
         "edit-address": edit_address,
         "delete-contact": delete_contact,
-        "close": exit_program,
-        "exit": exit_program,
+    }
+
+    notes_commands = {
+        "add-note": add_note,
+        "all-notes": all_notes,
+        "find-note": find_note,
+        "change-note": change_note,
+        "delete-note": delete_note,
+        "add-tag": add_tag,
+        "find-notes": find_notes,
+        "all-tags": all_tags,
     }
 
     while True:
@@ -54,13 +82,23 @@ def main():
             continue
 
         command, *args = parse_input(user_input)
-        action = commands.get(command.lower())
+        common_action = common_commands.get(command.lower())
+        contacts_action = contacts_commands.get(command.lower())
+        notes_action = notes_commands.get(command.lower())
 
-        if action:
-            result = action(args, contacts)
+        if common_action:
+            result = common_action(args, contacts, notes)
             if result == "exit":
                 print("Goodbye!")
                 break
+            if result:
+                print(result)
+        elif contacts_action:
+            result = contacts_action(args, contacts)
+            if result:
+                print(result)
+        elif notes_action:
+            result = notes_action(args, notes)
             if result:
                 print(result)
         else:
