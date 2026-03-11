@@ -1,28 +1,37 @@
 {
   "James": {
     "name": "James",
-    "phones": ["12025551234"],
+    "phones": [
+      "12025551234"
+    ],
     "birthday": "15.03.1985",
     "email": "james@example.com",
     "address": "1600 Pennsylvania Ave NW, Washington DC, USA"
   },
   "Emily": {
     "name": "Emily",
-    "phones": ["442071234567", "442071234568"],
+    "phones": [
+      "442071234567",
+      "442071234568"
+    ],
     "birthday": null,
     "email": "emily@mail.co.uk",
     "address": null
   },
   "Michael": {
     "name": "Michael",
-    "phones": ["493012345678"],
+    "phones": [
+      "493012345678"
+    ],
     "birthday": "22.07.1990",
     "email": null,
     "address": "Alexanderplatz 1, 10178 Berlin, Germany"
   },
   "Sarah": {
     "name": "Sarah",
-    "phones": ["33142345678"],
+    "phones": [
+      "33142345678"
+    ],
     "birthday": "01.12.1992",
     "email": "sarah@gmail.com",
     "address": null
@@ -36,77 +45,101 @@
   },
   "Jennifer": {
     "name": "Jennifer",
-    "phones": ["61412345678"],
+    "phones": [
+      "61412345678"
+    ],
     "birthday": null,
     "email": null,
     "address": "1 Martin Place, Sydney NSW 2000, Australia"
   },
   "Robert": {
     "name": "Robert",
-    "phones": ["81312345678", "81312345679"],
+    "phones": [
+      "81312345678",
+      "81312345679"
+    ],
     "birthday": "18.11.1979",
     "email": "robert@example.jp",
     "address": "1-1-1 Marunouchi, Chiyoda-ku, Tokyo, Japan"
   },
   "Amanda": {
     "name": "Amanda",
-    "phones": ["34612345678"],
+    "phones": [
+      "34612345678"
+    ],
     "birthday": "25.01.1995",
     "email": null,
     "address": null
   },
   "Christopher": {
     "name": "Christopher",
-    "phones": ["393201234567"],
+    "phones": [
+      "393201234567"
+    ],
     "birthday": null,
     "email": "chris@email.it",
     "address": "Piazza del Colosseo 1, 00184 Rome, Italy"
   },
   "Jessica": {
     "name": "Jessica",
-    "phones": ["31612345678"],
+    "phones": [
+      "31612345678"
+    ],
     "birthday": "14.08.1987",
     "email": "jessica@gmail.com",
     "address": null
   },
   "Daniel": {
     "name": "Daniel",
-    "phones": ["5511987654321"],
+    "phones": [
+      "5511987654321"
+    ],
     "birthday": "03.04.1993",
     "email": null,
     "address": "Av. Paulista 1578, São Paulo, Brazil"
   },
   "Ashley": {
     "name": "Ashley",
-    "phones": ["5215512345678", "5215512345679"],
+    "phones": [
+      "5215512345678",
+      "5215512345679"
+    ],
     "birthday": null,
     "email": "ashley@mail.mx",
     "address": null
   },
   "Matthew": {
     "name": "Matthew",
-    "phones": ["61234567890"],
+    "phones": [
+      "61234567890"
+    ],
     "birthday": "30.09.1991",
     "email": "matt@example.com",
     "address": "123 Collins St, Melbourne VIC 3000, Australia"
   },
   "Elizabeth": {
     "name": "Elizabeth",
-    "phones": ["4915123456789"],
+    "phones": [
+      "4915123456789"
+    ],
     "birthday": "12.06.1982",
     "email": null,
     "address": "Marienplatz 8, 80331 Munich, Germany"
   },
   "Andrew": {
     "name": "Andrew",
-    "phones": ["34698765432"],
+    "phones": [
+      "34698765432"
+    ],
     "birthday": null,
     "email": "andrew@empresa.es",
     "address": null
   },
   "Lauren": {
     "name": "Lauren",
-    "phones": ["12025559876"],
+    "phones": [
+      "12025559876"
+    ],
     "birthday": "07.02.1994",
     "email": "lauren@gmail.com",
     "address": "350 5th Ave, New York NY 10118, USA"
@@ -120,21 +153,27 @@
   },
   "Nicole": {
     "name": "Nicole",
-    "phones": ["442081234567"],
+    "phones": [
+      "442081234567"
+    ],
     "birthday": null,
     "email": "nicole@company.co.uk",
     "address": "10 Downing St, London SW1A 2AA, UK"
   },
   "Ryan": {
     "name": "Ryan",
-    "phones": ["14165551234"],
+    "phones": [
+      "14165551234"
+    ],
     "birthday": "28.12.1989",
     "email": null,
     "address": "123 Queen St, Vancouver BC V6Z 1A9, Canada"
   },
   "Stephanie": {
     "name": "Stephanie",
-    "phones": ["81912345678"],
+    "phones": [
+      "81912345678"
+    ],
     "birthday": "16.04.1996",
     "email": "stephanie@example.com",
     "address": null

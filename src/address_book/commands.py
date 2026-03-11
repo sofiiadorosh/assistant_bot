@@ -247,13 +247,15 @@ def delete_contact(args, contacts: AddressBook):
 
 @input_error
 def get_upcoming_birthdays(args, contacts: AddressBook):
-    try:
-        (days,) = args
-        days = int(days)
-        if days < 0:
-            raise ValueError
-    except (ValueError, TypeError):
-        raise DaysInvalidError()
+    days = 7
+    if args:
+        try:
+            (days,) = args
+            days = int(days)
+            if days < 0:
+                raise ValueError
+        except (ValueError, TypeError):
+            raise DaysInvalidError()
 
     if not contacts:
         return "No contacts yet. Use 'add-contact' to create."
