@@ -79,14 +79,7 @@ def find_contact(args, contacts: AddressBook):
     except ValueError:
         raise ArgumentInvalidError
 
-    result = contacts.find_record(field, value)
-    if result is None:
-        records = []
-    elif isinstance(result, list):
-        records = result
-    else:
-        records = [result]
-
+    records = contacts.find_record(field, value)
     if not records:
         return f"No contacts found with {field} '{value}'."
     return "\n".join(str(record) for record in records)
