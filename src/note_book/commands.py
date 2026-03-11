@@ -12,7 +12,7 @@ def add_note(args, notes):
     except ValueError:
         raise ArgumentInvalidError
 
-    note = notes.find_note_by_title(title)
+    note = notes.get_note(title)
     if note is None:
         note = Note(title, content)
         notes.add_note(note)
@@ -60,7 +60,7 @@ def edit_note(args, notes):
     except ValueError:
         raise ArgumentInvalidError
 
-    note = notes.find_note_by_title(title)
+    note = notes.get_note(title)
     if note is None:
         return f"Note '{title}' not found."
 
@@ -76,7 +76,7 @@ def delete_note(args, notes):
     except ValueError:
         raise ArgumentInvalidError
 
-    note = notes.find_note_by_title(title)
+    note = notes.get_note(title)
     if note is None:
         return f"Note '{title}' not found."
 
@@ -92,7 +92,7 @@ def add_tag(args, notes):
     except ValueError:
         raise ArgumentInvalidError
 
-    note = notes.find_note_by_title(title)
+    note = notes.get_note(title)
     if note is None:
         return f"Note '{title}' not found."
 

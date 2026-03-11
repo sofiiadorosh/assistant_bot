@@ -73,7 +73,7 @@ class NoteBook(UserDict):
     def add_note(self, note):
         self.data[note.title.value] = note
 
-    def find_note_by_title(self, title):
+    def get_note(self, title):
         for stored, note in self.data.items():
             if stored.lower() == title.lower():
                 return note
