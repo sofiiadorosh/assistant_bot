@@ -217,16 +217,13 @@ class AddressBook(UserDict):
         ]
 
     def find_record_by_all(self, query):
-        return [
-            contact
-            for contact in self.data.values()
-            if (
-                self.find_record_by_name(query)
-                or self.find_record_by_phone(query)
-                or self.find_record_by_email(query)
-                or self.find_record_by_address(query)
-            )
-        ]
+        results = (
+            self.find_record_by_name(query)
+            + self.find_record_by_phone(query)
+            + self.find_record_by_email(query)
+            + self.find_record_by_address(query)
+        )
+        return list({contact.name.value: contact for contact in results}.values())
 
     def find_record(self, field, query):
         methods = {

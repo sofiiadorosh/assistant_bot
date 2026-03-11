@@ -23,6 +23,7 @@ A command-line interface (CLI) personal assistant application for managing conta
 - **Search notes** by various criteria (e.g., by keyword or tag)
 - **Edit and delete** notes
 - **Add tags** to notes and list all tags
+- **Sort notes** alphabetically by title
 
 ### Intelligent Analysis
 
@@ -111,6 +112,7 @@ python main.py
 | `delete-note <title>` | Delete a note |
 | `add-tag <title> <tag>` | Add a tag to a note |
 | `all-tags` | Show all tags |
+| `sort-notes` | Sort all notes alphabetically by title |
 
 ### Short commands
 
@@ -123,9 +125,9 @@ There are single-letter commands to get a list of all items: `c` = all contacts,
 | `a` add | `c` contact       |
 | `e` edit | `n` note          |
 | `d` delete | `p` phone         |
-| `s` show | `e` email         |
-| `f` find | `a` address       |
-| | `b` birthday      |
+| `s` sort | `e` email         |
+| `sh` show | `a` address      |
+| `f` find | `b` birthday      |
 | | `t` tag           |
 
 **Examples:**
@@ -141,9 +143,15 @@ There are single-letter commands to get a list of all items: `c` = all contacts,
 
 ## Data Storage
 
-All data (contacts, notes) is stored on the hard drive in the user's folder:
+All data is stored on the hard drive in the user's home directory under `~/.assistant_bot/`:
+
+| File | Contents |
+|------|----------|
+| `~/.assistant_bot/address_book.pkl` | Contacts |
+| `~/.assistant_bot/note_book.pkl` | Notes |
+
+- Data is saved automatically after every write operation
 - The assistant can be restarted without losing any data
-- Data is saved automatically after each operation
 
 ## Validation Rules
 
@@ -194,11 +202,11 @@ assistant_bot/
     ├── address_book/       # Contact management
     │   ├── commands.py     # Contact command handlers
     │   ├── models.py       # AddressBook, Record, field models
-    │   └── store.py        # Load/save contacts (JSON)
-    └── note_book/          # Notes management
+    │   └── store.py        # Load/save contacts (pickle)
+└── note_book/          # Notes management
         ├── commands.py     # Note command handlers
         ├── models.py       # NoteBook, Note, Title, Content, tags
-        └── store.py        # Load/save notes (JSON)
+        └── store.py        # Load/save notes (pickle)
 ```
 
 ## Technologies

@@ -65,6 +65,7 @@ def show_help(args, contacts, notes):
 | delete-note <title>                           | Delete a note                                  |
 | add-tag <title> <tag>                         | Add a tag to a note                            |
 | all-tags                                      | Show all tags                                  |
+| sort-notes                                    | Sort notes alphabetically by title             |
 +-----------------------------------------------+------------------------------------------------+
 | SHORT COMMANDS                                                                |
 +-----------------------------------------------+------------------------------------------------+
@@ -77,9 +78,9 @@ def show_help(args, contacts, notes):
 | a add                                         | c contact                                      |
 | e edit                                        | n note                                         |
 | d delete                                      | p phone                                        |
-| s show                                        | e email                                        |
-| f find                                        | a address                                      |
-|                                               | b birthday                                     |
+| s sort                                        | e email                                        |
+| sh show                                       | a address                                      |
+| f find                                        | b birthday                                     |
 |                                               | t tag                                          |
 +-----------------------------------------------+------------------------------------------------+
 """

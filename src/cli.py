@@ -29,11 +29,12 @@ from src.note_book.commands import (
     delete_note,
     add_tag,
     all_tags,
+    sort_notes,
 )
 from src.suggest_command import suggest_command
 
 
-SHORT_ACTION = {"a": "add", "e": "edit", "d": "delete", "s": "show", "f": "find"}
+SHORT_ACTION = {"a": "add", "e": "edit", "d": "delete", "s": "sort", "sh": "show", "f": "find"}
 SHORT_ENTITY = {"c": "contact", "n": "note", "p": "phone", "e": "email", "a": "address", "b": "birthday", "t": "tag"}
 ALL_ACTION = {"c": "all-contacts", "n": "all-notes", "t": "all-tags"}
 BIRTHDAY_ACTION = {"b": "birthdays"}
@@ -55,6 +56,7 @@ SHORT_TO_FULL = {
     ("edit", "note"): "edit-note",
     ("delete", "note"): "delete-note",
     ("add", "tag"): "add-tag",
+    ("sort", "note"): "sort-notes",
 }
 
 
@@ -121,6 +123,7 @@ def main():
         "delete-note": delete_note,
         "add-tag": add_tag,
         "all-tags": all_tags,
+        "sort-notes": sort_notes,
     }
 
     while True:
