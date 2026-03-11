@@ -12,16 +12,16 @@ FILENAME_CONTACTS = _BASE_DIR / "samples" / "contacts.json"
 FILENAME_NOTES = _BASE_DIR / "samples" / "notes.json"
 
 
-def load_sample_data(contacts, notes):
-    address_book = load_data_contacts()
-    note_book = load_data_notes()
+def load_sample(contacts, notes):
+    address_book = load_contacts()
+    note_book = load_notes()
     save_address_book(address_book)
     save_note_book(note_book)
     contacts.add_records(address_book.data.values())
     notes.add_notes(note_book.data.values())
 
 
-def load_data_contacts(filename=FILENAME_CONTACTS):
+def load_contacts(filename=FILENAME_CONTACTS):
     try:
         with open(Path(filename), "r", encoding="utf-8") as fh:
             contacts = json.load(fh)
@@ -50,7 +50,7 @@ def load_data_contacts(filename=FILENAME_CONTACTS):
     return book
 
 
-def load_data_notes(filename=FILENAME_NOTES):
+def load_notes(filename=FILENAME_NOTES):
     try:
         with open(Path(filename), "r", encoding="utf-8") as fh:
             notes = json.load(fh)
