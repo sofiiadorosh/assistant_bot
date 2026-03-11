@@ -59,4 +59,20 @@ def show_help(args, contacts, notes):
 | add-tag <title> <tag>                         | Add a tag to a note                            |
 | all-tags                                      | Show all tags                                  |
 +-----------------------------------------------+------------------------------------------------+
+| SHORT COMMANDS                                                                |
++-----------------------------------------------+------------------------------------------------+
+| 1st = action, 2nd = entity, then rest.        | Same as full commands above.                   |
+| c all-contacts                                |                                                |
+| n all-notes                                   |                                                |
+| t all-tags                                    |                                                |
+| b birthdays: 7 (default), else your days      |                                                |
++-----------------------------------------------+------------------------------------------------+
+| a add                                         | c contact                                      |
+| e edit                                        | n note                                         |
+| d delete                                      | p phone                                        |
+| s show                                        | e email                                        |
+| f find                                        | a address                                      |
+|                                               | b birthday                                     |
+|                                               | t tag                                          |
++-----------------------------------------------+------------------------------------------------+
 """

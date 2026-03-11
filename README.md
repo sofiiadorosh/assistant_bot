@@ -111,6 +111,33 @@ python main.py
 | `add-tag <title> <tag>` | Add a tag to a note |
 | `all-tags` | Show all tags |
 
+### Short commands
+
+You can run commands using short form: **first word = action**, **second word = entity**, then the rest of the arguments. Same as the full commands above.
+
+There are single-letter commands to get a list of all items: `c` = all contacts, `n` = all notes, `t` = all tags. For upcoming birthdays, `b` = birthdays: if you pass `b` with no argument it defaults to **7** days; otherwise it uses the number of days you entered (e.g. `b 14`).
+
+| Action (1st word) | Entity (2nd word) |
+|-------------------|-------------------|
+| `a` add | `c` contact       |
+| `e` edit | `n` note          |
+| `d` delete | `p` phone         |
+| `s` show | `e` email         |
+| `f` find | `a` address       |
+| | `b` birthday      |
+| | `t` tag           |
+
+**Examples:**
+- `a c John 1234567890` → add contact John with phone 1234567890
+- `f c name Henry` → find contacts by name
+- `f c all John` → search all fields for "John"
+- `a n Yupi Super dog` → add note
+- `d n Yupi` → delete note
+- `c` → all contacts (same as `all-contacts`)
+- `n` → all notes (same as `all-notes`)
+- `t` → all tags (same as `all-tags`)
+- `b` → upcoming birthdays in the next 7 days (default); `b 14` → next 14 days
+
 ## Data Storage
 
 All data (contacts, notes) is stored on the hard drive in the user's folder:

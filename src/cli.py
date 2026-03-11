@@ -31,9 +31,53 @@ from src.note_book.commands import (
 )
 
 
+SHORT_ACTION = {"a": "add", "e": "edit", "d": "delete", "s": "show", "f": "find"}
+SHORT_ENTITY = {"c": "contact", "n": "note", "p": "phone", "e": "email", "a": "address", "b": "birthday", "t": "tag"}
+ALL_ACTION = {"c": "all-contacts", "n": "all-notes", "t": "all-tags"}
+BIRTHDAY_ACTION = {"b": "birthdays"}
+
+SHORT_TO_FULL = {
+    ("add", "contact"): "add-contact",
+    ("find", "contact"): "find-contact",
+    ("delete", "contact"): "delete-contact",
+    ("edit", "contact"): "edit-contact",
+    ("show", "phone"): "show-phone",
+    ("add", "birthday"): "add-birthday",
+    ("show", "birthday"): "show-birthday",
+    ("add", "email"): "add-email",
+    ("edit", "email"): "edit-email",
+    ("add", "address"): "add-address",
+    ("edit", "address"): "edit-address",
+    ("add", "note"): "add-note",
+    ("find", "note"): "find-note",
+    ("edit", "note"): "edit-note",
+    ("delete", "note"): "delete-note",
+    ("add", "tag"): "add-tag",
+}
+
+
+def resolve_short_command(command, args):
+    full = BIRTHDAY_ACTION.get(command.lower())
+    if full:
+        return full, args if args else ["7"]
+    if not args:
+        full = ALL_ACTION.get(command.lower())
+        return (full, []) if full else (command, args)
+
+    action = SHORT_ACTION.get(command.lower())
+    entity = SHORT_ENTITY.get(args[0].lower())
+    if not action or not entity:
+        return command, args
+
+    rest = args[1:]
+    full = SHORT_TO_FULL.get((action, entity))
+    return (full, rest) if full else (command, args)
+
+
 def parse_input(user_input):
     cmd, *args = user_input.split()
     cmd = cmd.strip().lower()
+    cmd, args = resolve_short_command(cmd, args)
     return cmd, *args
 
 
