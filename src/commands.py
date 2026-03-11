@@ -1,8 +1,14 @@
 from src.decorators import persist_data
+from src.load_sample import load_sample
 
 
 def hello(args, contacts, notes):
     return "Welcome! Type 'help' to see available commands. How can I help you?"
+
+
+def sample(args, contacts, notes):
+    load_sample(contacts, notes)
+    return "Sample data added."
 
 
 @persist_data
@@ -18,6 +24,7 @@ def show_help(args, contacts, notes):
 | GENERAL                                                                                        |
 +-----------------------------------------------+------------------------------------------------+
 | hello                                         | Greet the assistant                            |
+| sample                                        | Load sample data                           |
 | help                                          | Show this help message                         |
 | close / exit                                  | Exit the assistant                             |
 +-----------------------------------------------+------------------------------------------------+

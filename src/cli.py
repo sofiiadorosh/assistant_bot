@@ -2,6 +2,7 @@ from src.address_book.store import load_data as load_address_book
 from src.note_book.store import load_data as load_note_book
 from src.commands import (
     hello,
+    sample,
     exit_program,
     show_help,
 )
@@ -90,6 +91,7 @@ def main():
 
     common_commands = {
         "hello": hello,
+        "sample": sample,
         "help": show_help,
         "close": exit_program,
         "exit": exit_program,
