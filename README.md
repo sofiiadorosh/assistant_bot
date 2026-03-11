@@ -58,6 +58,7 @@ python main.py
 | Command | Description |
 |---------|-------------|
 | `hello` | Greet the assistant and see available commands hint |
+| `sample-data` | Load sample data |
 | `help` | Display all available commands |
 | `close` / `exit` | Exit the assistant |
 

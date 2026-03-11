@@ -183,6 +183,11 @@ class AddressBook(UserDict):
                 return record
         return None
 
+    def add_records(self, records):
+        for record in records:
+            if self.get_record(record.name.value) is None:
+                self.add_record(record)
+
     def find_record_by_name(self, query):
         return [
             contact

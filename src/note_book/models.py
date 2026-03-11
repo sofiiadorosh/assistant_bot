@@ -79,6 +79,11 @@ class NoteBook(UserDict):
                 return note
         return None
 
+    def add_notes(self, notes):
+        for note in notes:
+            if self.get_note(note.title.value) is None:
+                self.add_note(note)
+
     def delete_note(self, title):
         del self.data[title]
 
