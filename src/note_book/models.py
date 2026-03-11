@@ -111,5 +111,5 @@ class NoteBook(UserDict):
     def all_tags(self):
         return list(set(tag for note in self.data.values() for tag in note.tags))
 
-    def sort_notes(self):
+    def sort_notes_by_title(self):
         return sorted(self.data.values(), key=lambda x: x.title.value)

@@ -26,6 +26,7 @@ ALL_COMMANDS = [
     "delete-note",
     "add-tag",
     "all-tags",
+    "sort-notes",
 ]
 
 INTENT_KEYWORDS = {
@@ -79,6 +80,7 @@ INTENT_KEYWORDS = {
     "delete-note": ["delete note", "remove note", "erase note"],
     "add-tag": ["add tag", "tag note", "add tag to note", "label note"],
     "all-tags": ["all tags", "show tags", "list tags", "tags list"],
+    "sort-notes": ["sort notes", "order notes", "notes by tag", "sort by tag", "sort notes by tag"],
 }
 
 COMMAND_DESCRIPTIONS = {
@@ -106,6 +108,7 @@ COMMAND_DESCRIPTIONS = {
     "delete-note": "Delete a note",
     "add-tag": "Add tag to note",
     "all-tags": "Show all tags",
+    "sort-notes": "Sort notes alphabetically by title",
 }
 
 _INTENT_CHOICES = []

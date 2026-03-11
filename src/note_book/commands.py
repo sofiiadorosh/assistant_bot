@@ -105,3 +105,10 @@ def all_tags(args, notes):
     if not notes.all_tags():
         return "No tags yet."
     return ", ".join(notes.all_tags())
+
+
+@input_error
+def sort_notes(args, notes):
+    if not notes.data:
+        return "No notes yet."
+    return "\n".join(str(note) for note in notes.sort_notes_by_title())
