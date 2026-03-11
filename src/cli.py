@@ -29,6 +29,7 @@ from src.note_book.commands import (
     add_tag,
     all_tags,
 )
+from src.suggest_command import suggest_command
 
 
 SHORT_ACTION = {"a": "add", "e": "edit", "d": "delete", "s": "show", "f": "find"}
@@ -146,4 +147,8 @@ def main():
             if result:
                 print(result)
         else:
-            print("Invalid command.")
+            suggested_cmd, suggestion_message = suggest_command(user_input)
+            if suggested_cmd and suggestion_message:
+                print(f"Unknown command. {suggestion_message}")
+            else:
+                print("Unknown command. Type 'help' to see available commands.")
