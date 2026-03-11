@@ -73,7 +73,7 @@ class NoteBook(UserDict):
     def add_note(self, note):
         self.data[note.title.value] = note
 
-    def find_note_by_title(self, title):
+    def get_note(self, title):
         for stored, note in self.data.items():
             if stored.lower() == title.lower():
                 return note
@@ -96,6 +96,12 @@ class NoteBook(UserDict):
             for note in self.data.values()
             if any(tag == note_tag.lower() for note_tag in note.tags)
         ]
+
+    def find_note(self, field, value):
+        field = (field or "keyword").lower()
+        if field == "tag":
+            return self.find_note_by_tag(value)
+        return self.find_note_by_keyword(value)
 
     def all_tags(self):
         return list(set(tag for note in self.data.values() for tag in note.tags))

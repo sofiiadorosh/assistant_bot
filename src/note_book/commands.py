@@ -12,7 +12,7 @@ def add_note(args, notes):
     except ValueError:
         raise ArgumentInvalidError
 
-    note = notes.find_note_by_title(title)
+    note = notes.get_note(title)
     if note is None:
         note = Note(title, content)
         notes.add_note(note)
@@ -32,23 +32,20 @@ def all_notes(args, notes):
 @input_error
 def find_notes(args, notes):
     try:
-        field, *rest = args
+        if not args:
+            raise ValueError
+        field, *rest = ("keyword", *args) if len(args) == 1 else args
         if not rest:
             raise ValueError
         value = " ".join(rest).strip()
         if not value:
             raise ValueError
+        field = field.lower()
+        if field not in ("keyword", "tag"):
+            raise ValueError
     except ValueError:
         raise ArgumentInvalidError
-
-    field = field.lower()
-    value = value.lower()
-    methods = {"keyword": notes.find_note_by_keyword, "tag": notes.find_note_by_tag}
-
-    if field not in methods:
-        return "Invalid field. Use 'keyword' or 'tag'."
-
-    found_notes = methods[field](value)
+    found_notes = notes.find_note(field, value)
     if not found_notes:
         return f"No notes found with {field} '{value}'."
     return "\n".join(str(note) for note in found_notes)
@@ -63,7 +60,7 @@ def edit_note(args, notes):
     except ValueError:
         raise ArgumentInvalidError
 
-    note = notes.find_note_by_title(title)
+    note = notes.get_note(title)
     if note is None:
         return f"Note '{title}' not found."
 
@@ -79,7 +76,7 @@ def delete_note(args, notes):
     except ValueError:
         raise ArgumentInvalidError
 
-    note = notes.find_note_by_title(title)
+    note = notes.get_note(title)
     if note is None:
         return f"Note '{title}' not found."
 
@@ -95,7 +92,7 @@ def add_tag(args, notes):
     except ValueError:
         raise ArgumentInvalidError
 
-    note = notes.find_note_by_title(title)
+    note = notes.get_note(title)
     if note is None:
         return f"Note '{title}' not found."
 

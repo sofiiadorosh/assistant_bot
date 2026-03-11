@@ -53,7 +53,7 @@ def show_help(args, contacts, notes):
 +-----------------------------------------------+------------------------------------------------+
 | add-note <title> <content>                    | Add a new note                                 |
 | all-notes                                     | Display all notes                              |
-| find-note <field> <value>                     | Find notes: field = keyword or tag             |
+| find-note <value> or <field> <value>          | Find notes: default = keyword, or use tag      |
 | edit-note <title> <content>                   | Edit a note                                    |
 | delete-note <title>                           | Delete a note                                  |
 | add-tag <title> <tag>                         | Add a tag to a note                            |

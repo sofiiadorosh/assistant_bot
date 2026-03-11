@@ -177,11 +177,18 @@ class AddressBook(UserDict):
     def add_record(self, record):
         self.data[record.name.value] = record
 
-    def find_record_by_name(self, name):
+    def get_record(self, name):
         for stored, record in self.data.items():
             if stored.lower() == name.lower():
                 return record
         return None
+
+    def find_record_by_name(self, query):
+        return [
+            contact
+            for contact in self.data.values()
+            if query.lower() in contact.name.value.lower()
+        ]
 
     def find_record_by_phone(self, phone):
         return [
@@ -209,10 +216,10 @@ class AddressBook(UserDict):
             contact
             for contact in self.data.values()
             if (
-                query in contact.name.value.lower()
-                or any(query in str(phone.value) for phone in contact.phones)
-                or (contact.email and query in contact.email.value.lower())
-                or (contact.address and query in contact.address.value.lower())
+                self.find_record_by_name(query)
+                or self.find_record_by_phone(query)
+                or self.find_record_by_email(query)
+                or self.find_record_by_address(query)
             )
         ]
 
