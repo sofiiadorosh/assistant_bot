@@ -105,7 +105,7 @@ python main.py
 |---------|-------------|
 | `add-note <title> <content>` | Add a new note |
 | `all-notes` | Display all notes |
-| `find-note <field> <value>` | Find notes by keyword or tag (field: `keyword` or `tag`) |
+| `find-note <value>` or `find-note <field> <value>` | Find notes by keyword (default) or tag. Omit field to search by keyword; use `keyword` or `tag` to choose. |
 | `edit-note <title> <content>` | Edit an existing note |
 | `delete-note <title>` | Delete a note |
 | `add-tag <title> <tag>` | Add a tag to a note |

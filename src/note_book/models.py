@@ -97,6 +97,12 @@ class NoteBook(UserDict):
             if any(tag == note_tag.lower() for note_tag in note.tags)
         ]
 
+    def find_note(self, field, value):
+        field = (field or "keyword").lower()
+        if field == "tag":
+            return self.find_note_by_tag(value)
+        return self.find_note_by_keyword(value)
+
     def all_tags(self):
         return list(set(tag for note in self.data.values() for tag in note.tags))
 
