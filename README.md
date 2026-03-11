@@ -63,12 +63,12 @@ python main.py
 
 #### Contacts
 
-| Command | Description |
-|---------|-------------|
-| `add-contact <name> <phone>` | Add a new contact with name and phone number |
-| `all-contacts` | Display all contacts |
-| `find-contact <query>` or `find-contact <field> <query>` | Find contacts. One arg = search **all** fields (default). Two+ args = search by field: `name`, `phone`, `email`, `address`, or `all`. |
-| `delete-contact <name>` | Delete a contact |
+| Command | Description                                                                  |
+|---------|------------------------------------------------------------------------------|
+| `add-contact <name> <phone>` | Add a new contact with name and phone number                                 |
+| `all-contacts` | Display all contacts                                                         |
+| `find-contact <query>` or `find-contact <field> <query>` | Find contacts by all (default) or by field. Omit field to search all; use `name`, `phone`, `email`, `address`, or `all` to choose. |
+| `delete-contact <name>` | Delete a contact                                                             |
 
 #### Phone
 
