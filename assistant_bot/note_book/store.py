@@ -1,7 +1,7 @@
 from pathlib import Path
 from pickle import dump, load
 
-from src.note_book.models import NoteBook
+from assistant_bot.note_book.models import NoteBook
 
 
 _DATA_DIR = Path.home() / ".assistant_bot"
@@ -19,4 +19,6 @@ def load_data(filename=FILENAME):
         with open(filename, "rb") as fh:
             return load(fh)
     except FileNotFoundError:
+        return NoteBook()
+    except Exception:
         return NoteBook()

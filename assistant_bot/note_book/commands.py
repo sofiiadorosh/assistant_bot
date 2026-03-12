@@ -1,6 +1,6 @@
-from src.exceptions import ArgumentInvalidError
-from src.note_book.models import Note
-from src.decorators import input_error, persist_data
+from assistant_bot.exceptions import ArgumentInvalidError
+from assistant_bot.note_book.models import Note
+from assistant_bot.decorators import input_error, persist_data
 
 
 @input_error

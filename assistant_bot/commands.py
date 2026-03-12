@@ -1,5 +1,5 @@
-from src.decorators import persist_data
-from src.load_sample import load_sample
+from assistant_bot.decorators import persist_data
+from assistant_bot.load_sample import load_sample
 
 
 def hello(args, contacts, notes):

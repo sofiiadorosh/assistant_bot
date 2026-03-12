@@ -37,19 +37,21 @@ A command-line interface (CLI) personal assistant application for managing conta
 ## Installation
 
 ```bash
-# Clone the repository
 git clone https://github.com/sofiiadorosh/assistant_bot.git
 cd assistant_bot
-
-# Install dependencies
-pip install -r requirements.txt
+pip install -e .
 ```
 
 ## Usage
 
 ```bash
-# Run the assistant
-python main.py
+assistant-bot
+```
+
+Or alternatively:
+
+```bash
+python -m assistant_bot
 ```
 
 ### Available Commands
@@ -186,32 +188,35 @@ All data is stored on the hard drive in the user's home directory under `~/.assi
 
 ```
 assistant_bot/
-├── main.py                 # Application entry point
-├── README.md               # Project documentation
-├── requirements.txt        # Project dependencies
+├── main.py                     # Entry point (python main.py)
+├── README.md
+├── pyproject.toml              # Package config and console entry point
 ├── .gitignore
-├── samples/                # Sample data (JSON)
-│   ├── contacts.json       # Sample contacts
-│   └── notes.json          # Sample notes
-└── src/
-    ├── __init__.py         # Package initialization
-    ├── cli.py              # Command-line interface and input parsing
-    ├── commands.py         # General commands (hello, help, exit)
-    ├── decorators.py       # Input error handling, persist_data
-    ├── exceptions.py       # Custom exception classes
-    ├── address_book/       # Contact management
-    │   ├── commands.py     # Contact command handlers
-    │   ├── models.py       # AddressBook, Record, field models
-    │   └── store.py        # Load/save contacts (pickle)
-└── note_book/          # Notes management
-        ├── commands.py     # Note command handlers
-        ├── models.py       # NoteBook, Note, Title, Content, tags
-        └── store.py        # Load/save notes (pickle)
+└── assistant_bot/              # Installable Python package
+    ├── __init__.py
+    ├── __main__.py             # Entry point (python -m assistant_bot)
+    ├── cli.py                  # REPL loop and input parsing
+    ├── commands.py             # General commands (hello, help, exit)
+    ├── decorators.py           # input_error, persist_data
+    ├── exceptions.py           # Custom exception classes
+    ├── suggest_command.py      # Fuzzy command suggestions
+    ├── load_sample.py          # Sample data loader
+    ├── samples/                # Bundled sample data
+    │   ├── contacts.json
+    │   └── notes.json
+    ├── address_book/           # Contact management
+    │   ├── commands.py         # Contact command handlers
+    │   ├── models.py           # AddressBook, Record, field models
+    │   └── store.py            # Load/save contacts (pickle)
+    └── note_book/              # Notes management
+        ├── commands.py         # Note command handlers
+        ├── models.py           # NoteBook, Note, Title, Content, tags
+        └── store.py            # Load/save notes (pickle)
 ```
 
 ## Technologies
 
-- Python 3.8+
+- Python 3.9+
 
 ## Contributing
 

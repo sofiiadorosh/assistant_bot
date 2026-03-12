@@ -1,7 +1,7 @@
 from pathlib import Path
 from pickle import dump, load
 
-from src.address_book.models import AddressBook
+from assistant_bot.address_book.models import AddressBook
 
 
 _DATA_DIR = Path.home() / ".assistant_bot"
@@ -19,5 +19,7 @@ def load_data(filename=FILENAME):
         with open(filename, "rb") as fh:
             return load(fh)
     except FileNotFoundError:
+        return AddressBook()
+    except Exception:
         return AddressBook()
         

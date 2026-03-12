@@ -1,6 +1,6 @@
-from src.exceptions import ArgumentInvalidError, DaysInvalidError
-from src.address_book.models import AddressBook, Record
-from src.decorators import input_error, persist_data
+from assistant_bot.exceptions import ArgumentInvalidError, DaysInvalidError
+from assistant_bot.address_book.models import AddressBook, Record
+from assistant_bot.decorators import input_error, persist_data
 
 
 @input_error

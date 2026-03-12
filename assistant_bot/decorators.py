@@ -1,5 +1,5 @@
-from src.exceptions import ArgumentInvalidError, DaysInvalidError
-from src.address_book.models import (
+from assistant_bot.exceptions import ArgumentInvalidError, DaysInvalidError
+from assistant_bot.address_book.models import (
     AddressBookError,
     InvalidPhoneError,
     InvalidEmailError,
@@ -7,13 +7,13 @@ from src.address_book.models import (
     RecordNotFoundError,
     AddressBook,
 )
-from src.note_book.models import (
+from assistant_bot.note_book.models import (
     NoteBook,
     InvalidTitleError,
     InvalidContentError,
 )
-from src.address_book.store import save_data as save_address_book
-from src.note_book.store import save_data as save_note_book
+from assistant_bot.address_book.store import save_data as save_address_book
+from assistant_bot.note_book.store import save_data as save_note_book
 
 
 def input_error(func):

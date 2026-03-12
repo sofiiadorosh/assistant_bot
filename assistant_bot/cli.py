@@ -1,12 +1,12 @@
-from src.address_book.store import load_data as load_address_book
-from src.note_book.store import load_data as load_note_book
-from src.commands import (
+from assistant_bot.address_book.store import load_data as load_address_book
+from assistant_bot.note_book.store import load_data as load_note_book
+from assistant_bot.commands import (
     hello,
     sample,
     exit_program,
     show_help,
 )
-from src.address_book.commands import (
+from assistant_bot.address_book.commands import (
     add_contact,
     edit_contact,
     show_phone,
@@ -21,7 +21,7 @@ from src.address_book.commands import (
     delete_contact,
     find_contact,
 )
-from src.note_book.commands import (
+from assistant_bot.note_book.commands import (
     add_note,
     all_notes,
     find_notes,
@@ -31,7 +31,7 @@ from src.note_book.commands import (
     all_tags,
     sort_notes,
 )
-from src.suggest_command import suggest_command
+from assistant_bot.suggest_command import suggest_command
 
 
 SHORT_ACTION = {"a": "add", "e": "edit", "d": "delete", "s": "sort", "sh": "show", "f": "find"}
