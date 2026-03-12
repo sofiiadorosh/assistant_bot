@@ -1,15 +1,15 @@
 import json
 from pathlib import Path
 
-from src.address_book.models import AddressBook, Record, AddressBookError
-from src.note_book.models import NoteBook, Note, NoteBookError
-from src.address_book.store import save_data as save_address_book
-from src.note_book.store import save_data as save_note_book
+from assistant_bot.address_book.models import AddressBook, Record, AddressBookError
+from assistant_bot.note_book.models import NoteBook, Note, NoteBookError
+from assistant_bot.address_book.store import save_data as save_address_book
+from assistant_bot.note_book.store import save_data as save_note_book
 
 
-_BASE_DIR = Path(__file__).resolve().parent.parent
-FILENAME_CONTACTS = _BASE_DIR / "samples" / "contacts.json"
-FILENAME_NOTES = _BASE_DIR / "samples" / "notes.json"
+_SAMPLES_DIR = Path(__file__).resolve().parent / "samples"
+FILENAME_CONTACTS = _SAMPLES_DIR / "contacts.json"
+FILENAME_NOTES = _SAMPLES_DIR / "notes.json"
 
 
 def load_sample(contacts, notes):
